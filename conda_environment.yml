@@ -1,0 +1,24 @@
+name: toopy
+channels:
+  - default
+  - fermi
+  - conda-forge
+dependencies:
+  - python
+  - pyyaml
+  - numpy>=1.16
+  - scipy
+  - pip
+  - astropy
+  - matplotlib>=3.3
+  - healpy
+  - astropy-healpix
+  - gammapy>=0.18
+  - pandas
+  - mocpy
+  - astroquery
+  - astroplan
+  - pygcn
+  - fermitools>=2.2.0
+  - pip:
+    - astrotools
