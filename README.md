@@ -29,23 +29,40 @@ $ `cd ../toopy`
 $ `conda activate toopy`
 
 ## User preferences
-Edit lines 23-27 in "ToOpy_gcn_listener_main.py" according to user preferences:
+Edit lines 27-43 in "toopy_gcn_listener_main.py" according to user preferences:
 ```
-######################################################################################
+# General Constraints
+#############################################
+#############################################
 observatory='"Roque de los Muchachos"' #***
 max_zenith='50'
 moon_separation='30'
 time_resolution='1' # time in hours per observing slot
+
+# Preferences for GW Alerts
+#############################################
+#############################################
+instrument_FOV='15.5'
+ranking='tiled_GW' # tiled_GW or Xmatch
+mode='diagnostic' # diagnostic or performance
+
+# Preferences for IceCube Alerts
+#############################################
+#############################################
 fermitools_refdata_path='/opt/anaconda3/envs/toopy/share/fermitools/refdata'
+lightcurve='no'
+
+
 ######################################################################################
 #***To get all possible sites use astropy-module:
 #from astropy.coordinates import EarthLocation
-#EarthLocation.get_site_names()
+#astropy.coordinates.EarthLocation.get_site_names()
+
 ```
 
 
 ## Listeing to alerts
-$ `python ToOpy_gcn_listener_main.py`
+$ `python toopy_gcn_listener_main.py`
 
 Notice the constant stream of hourly GW alerts @ x:15 (Revision 0) & x:20 (Revision 1) ;D
 Plus, every now and then some FermiGBM alerts ('FERMI_GBM_FIN_POS' & 'FERMI_GBM_SUBTHRESH')
@@ -62,13 +79,13 @@ $ `cd ../toopy`
 $ `conda activate toopy`
 
 ### Option 1; Testing pipeline with test alerts from ".xml" files
-Step 1: Modifiy "ToOpy_gcn_listener_main.py"
+Step 1: Modifiy "toopy_gcn_listener_main.py"
 
--> Comment line 324
+-> Comment line '444'
 
--> Uncomment a given alert (lines 324-333)
+-> Uncomment a given alert (lines 447-452)
 
--> Uncomment line 334 & 335
+-> Uncomment line 453 & 454
 
 ```
 # Listen for VOEvents until killed with Control-C.
@@ -76,39 +93,40 @@ Step 1: Modifiy "ToOpy_gcn_listener_main.py"
 
 # Templates for test alerts
 #payload = open('./xml_test_alerts/FermiGBM/test_GBM_SubTresh.xml', 'rb').read()
-#payload = open('./xml_test_alerts/FermiGBM/test_GBM_Final.xml', 'rb').read()
+#payload = open('./xml_test_alerts/FermiGBM/test_GBM_Final_Feb23.xml', 'rb').read()
 #payload = open('./xml_test_alerts/GW/test_GW_nuniq.xml', 'rb').read()
-#payload = open('./xml_test_alerts/GW/test_GW_nside.xml', 'rb').read()
-#payload = open('./xml_test_alerts/IceCube_TRACK/GOLD_Aug11_Rev1.xml', 'rb').read()
-payload = open('./xml_test_alerts/IceCube_CASCADE/CASCADE_Apr.xml', 'rb').read()
+#payload = open('./xml_test_alerts/IceCube_TRACK/GOLD_Aug11_Rev0.xml', 'rb').read()
+#payload = open('./xml_test_alerts/IceCube_CASCADE/2021/CASCADE_Dez21.xml', 'rb').read()
+#payload = open('./xml_test_alerts/SwiftBAT/SwiftBAT_Feb23.xml', 'rb').read()
 
 root = lxml.etree.fromstring(payload)
 handler(payload, root)
 ```
 
-Step 2: $ `python ToOpy_gcn_listener_main.py`
+Step 2: $ `python toopy_gcn_listener_main.py`
 
 ### Option 2; Testing pipeline with test alerts from script (for Track-like alerts)
-Step 1: Edit "initalize_custom_IceCube_TRACK_alert.sh" according to user preferences:
+Step 1: Edit "initalize_Reference_IC170922A.sh" according to user preferences:
 ```
-echo 'Give it a second or two to wake up....;)'
+echo 'Give it a couple of seconds to wake up....;)'
 python crossmatch_ranked.py \
 -observatory 'Roque de los Muchachos' \
 -zenith 50 \
 -moon_separation 30 \
 -time_res 1 \
 -flavour Track \
--ra 266.80 \
--dec '-3.58' \
--error 1 \
--obs_night 59620 \
--catalog 'J/ApJS/247/33/4fgl' \
+-ra 77.2853 \
+-dec '+5.7517' \
+-error 0.416388883335 \
+-obs_night 58018 \
+-catalog 'IX/67/4fgldr3' \
 -ranking_method 'VarInd' \
--fermitools_refdata_path '/opt/anaconda3/envs/mma_broker/share/fermitools/refdata' \
--Rev manually &
+-fermitools_refdata_path '/opt/anaconda3/envs/toopy/share/fermitools/refdata' \
+-Rev IC170922A \
+-lightcurve 'no' &
 ```
 
-Step 2: $ `./initalize_custom_IceCube_TRACK_alert.sh`
+Step 2: $ `./initalize_Reference_IC170922A.sh`
 
 # -------------------------
 # -------------------------
