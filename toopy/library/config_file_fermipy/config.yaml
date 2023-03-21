@@ -1,0 +1,29 @@
+data:
+  evfile : random_lat_photon.fits
+  scfile : random_lat_spacecraft.fits
+  ltcube : null
+
+binning:
+  roiwidth   : 15.0
+  binsz      : 0.08
+  binsperdec : 8
+
+selection :
+  emin : 100
+  emax : 300000
+  zmax    : 90 
+  evclass : 128
+  evtype  : 3
+  ra : 211.1333
+  dec : -5.8941
+
+gtlike:
+  edisp : True
+  irfs : 'P8R3_SOURCE_V3'
+  edisp_disable : ['isodiff','galdiff']
+
+model:
+  src_roiwidth : 15.0
+  galdiff: /nfs/pic.es/user/m/martero/.conda/envs/fermipy/share/fermitools/refdata/fermi/galdiffuse/gll_iem_v07.fits
+  isodiff: /nfs/pic.es/user/m/martero/.conda/envs/fermipy/share/fermitools/refdata/fermi/galdiffuse/iso_P8R3_SOURCE_V3_v1.txt
+  catalogs : ['4FGL']
