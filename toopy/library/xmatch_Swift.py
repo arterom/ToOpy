@@ -146,7 +146,7 @@ class merged_def():
             string=str(df_swift['DATE-OBS'].values[i])
             string_list_swift_bat.append(string)
         times_bat = Time(string_list_swift_bat, format='isot', scale='utc')
-        dt_iso_bat = TimeDelta(100, format='sec')
+        dt_iso_bat = TimeDelta(200, format='sec')
         t_bat_start=times_bat-dt_iso_bat
         t_bat_end=times_bat+dt_iso_bat
         df_swift['STMOC_bat_start']=t_bat_start

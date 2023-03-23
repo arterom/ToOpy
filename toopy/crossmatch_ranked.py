@@ -175,6 +175,12 @@ if args.flavour == 'BAT':
         outdir = xmatch_Swift.merged_def.Xmatched_raw_to_3Dplot(crossmatched_cat_glade2, outdir)
         xmatch_Swift.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat_glade2, args.zenith, args.moon_separation, args.time_res, args.obs_night, outdir)
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
+
+        os.chdir(str(base_dir))
+        argument_list=['test_arg']
+        separator = " "
+        subprocess.check_call('chmod u+r+x run_STMOC_Interceptor.sh', shell=True)
+        #subprocess.check_call("./run_STMOC_Interceptor.sh %s" % separator.join(argument_list), shell=True) 
 ######################################################################################
 ######################################################################################
 # FermiGBM
@@ -195,6 +201,12 @@ if args.flavour == 'GBM':
         print('Done with xmatchGLade2 '+'Total Run-time is: '+str(time.time() - start_argparse))
         xmatch_GBM.merged_def.Xmatched_top10_BMag_to_obslist_glade2(args.url, args.observatory, crossmatched_glade2_cat, args.zenith, args.moon_separation, hdul1, args.time_res, outdir)
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
+
+        os.chdir(str(base_dir))
+        argument_list=['test_arg']
+        separator = " "
+        subprocess.check_call('chmod u+r+x run_STMOC_Interceptor.sh', shell=True)
+        #subprocess.check_call("./run_STMOC_Interceptor.sh %s" % separator.join(argument_list), shell=True) 
 ######################################################################################
 ######################################################################################
 # GW

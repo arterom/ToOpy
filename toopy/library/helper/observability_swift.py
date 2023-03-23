@@ -279,13 +279,18 @@ class merged_def2():
                         #zenith from alt
                         #zenith=90*u.deg-altitude
         # Define range of times to observe between
-
-        start_time=Time(night, format='mjd', scale='utc')
-        dt_24hr = TimeDelta(86400, format='sec')
-        end_time = start_time + dt_24hr
+        start_time = Time(night, format='mjd', scale='utc')
+        dt2 = TimeDelta(86400, format='sec')
+        stop_time = start_time + dt2
         time_resolution = time_resolution * u.hour
-        time_grid = time_grid_from_range([start_time, end_time],
+        #time_resolution = 0.5 * u.hour
+
+        # Create grid of times from ``start_time`` to ``end_time``
+        # with resolution ``time_resolution``
+        time_grid = time_grid_from_range([start_time, stop_time],
                                          time_resolution=time_resolution)
+
+
 
 
 

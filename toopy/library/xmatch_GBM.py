@@ -112,7 +112,7 @@ class merged_def():
             string=str(df_gbm['DATE-OBS'].values[i])
             string_list_gbm.append(string)
         times_gbm = Time(string_list_gbm, format='isot', scale='utc')
-        dt_iso_gbm = TimeDelta(1, format='sec')
+        dt_iso_gbm = TimeDelta(200, format='sec')
         t_gbm_start=times_gbm-dt_iso_gbm
         t_gbm_end=times_gbm+dt_iso_gbm
         df_gbm['STMOC_gbm_start']=t_gbm_start
