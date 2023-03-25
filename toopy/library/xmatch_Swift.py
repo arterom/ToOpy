@@ -397,11 +397,14 @@ class merged_def():
         print(crossmatched_cat_glade2)
         print('########################')
         print('########################')
+        print('This is zenith:'+str(zenith))
+        print('This is time_resolution:'+str(time_resolution))
         crossmatched_cat_glade2=crossmatched_cat_glade2.sort_values(by='Bmag', ascending=False)
+        crossmatched_cat_glade2=crossmatched_cat_glade2.head(10)
         ###############
         #Observability
         ###############
-        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_swift.merged_def2.doit(observatory, crossmatched_cat_glade2, zenith, moon_sep, time_resolution, night, outdir)
+        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_swift.merged_def2.doit(observatory, crossmatched_cat_glade2, zenith, moon_sep, night, time_resolution, outdir)
         ###############
         #Pandas
         ###############
