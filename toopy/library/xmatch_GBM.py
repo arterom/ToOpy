@@ -100,7 +100,7 @@ class merged_def():
         lon=skycoord_evt.ra,
         lat=skycoord_evt.dec,
         radius=Angle(SRC_ERROR50, u.deg),
-        max_depth=7)
+        max_depth=10)
         ###############
         #STMOC
         ###############
@@ -164,6 +164,37 @@ class merged_def():
         ax.legend(prop={'size': 10})
         plt.grid(color="black", linestyle="dotted")
         outname = 'FOV_Galactic.pdf'
+        fullname = os.path.join(outdir, outname)    
+        plt.savefig(fullname)
+        ###############
+        #Figure 2
+        ###############
+        fig = plt.figure(figsize=(10, 10))
+        with WCS(fig, 
+            fov=30 * u.deg,
+            center=SkyCoord(skycoord_evt.ra,skycoord_evt.dec, unit='deg', frame='icrs'),
+            coordsys='icrs',
+            rotation=Angle(0, u.degree),
+            projection="AIT") as wcs:
+            ax = fig.add_subplot(1, 1, 1, projection=wcs)
+        moc_GBM_evt.fill(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="grey", label='HEALPIX (Contour: '+str(vol_percent*100)+' %)')
+        moc_GBM_evt.border(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="black")
+        moc_evt_cone.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="green", label='CONE (Error: '+str(SRC_ERROR50)+' deg)')
+        moc_evt_cone.border(ax=ax, wcs=wcs, alpha=0.5, fill=True, color="black")
+        moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
+        moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
+        ax.legend(prop={'size': 10})
+        plt.grid(color="black", linestyle="dotted")
+        plt.xlabel('RA', size=30)
+        plt.ylabel('DEC', size=30)
+        plt.xticks(color='black', fontsize=22)
+
+        ax.coords.grid(True, color='black')
+        #ax.coords[0].set_ticks(width=10)
+        ax.coords[0].set_ticklabel(size="xx-large")
+        #ax.coords[1].set_ticks(width=10)
+        ax.coords[1].set_ticklabel(size="xx-large")
+        outname = 'FOV_ROI.pdf'
         fullname = os.path.join(outdir, outname)    
         plt.savefig(fullname)
         ###################
@@ -266,7 +297,6 @@ class merged_def():
         print(hdul1_n)
         print('This is zenith:'+str(zenith))
         print('This is time_resolution:'+str(time_resolution))
-        print('This is hdul1:'+str(hdul1))
         crossmatched_cat=crossmatched_cat.sort_values(by='Bmag', ascending=False)
         crossmatched_cat=crossmatched_cat.head(10)
         ###############

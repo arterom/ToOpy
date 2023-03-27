@@ -91,11 +91,6 @@ class merged_def():
         )
         df_swift['MOC']=moc_Swift_BAT
         moc_4FGL = MOC.from_lonlat(cat_4FGL['_RAJ2000'].T * u.deg, cat_4FGL['_DEJ2000'].T * u.deg, max_norder=7)
-        idx_inside = moc_Swift_BAT.contains(cat_4FGL['_RAJ2000'].T * u.deg, cat_4FGL['_DEJ2000'].T * u.deg)
-        sources_inside = cat_4FGL[idx_inside]
-        moc_Cross_matched = MOC.from_lonlat(sources_inside['_RAJ2000'].T * u.deg, sources_inside['_DEJ2000'].T * u.deg, 7)
-        
-
         ###############
         #Glade2
         ###############
@@ -120,19 +115,6 @@ class merged_def():
         print('################################################################################################')
         print('################################################################################################')
         
-
-        ###############
-        #Pandas df
-        ###############
-        dict_xmatch = {'RA': sources_inside['_RAJ2000'],
-                'DEC': sources_inside['_DEJ2000'],
-                '_4FGL': sources_inside['_4FGL'],
-                'Cl1': sources_inside['Cl1'],
-                'VarInd': sources_inside['VarInd'],
-                'Assoc1': sources_inside['Assoc1']}
-        crossmatched_cat=pd.DataFrame.from_dict(dict_xmatch)
-
-
 
         ###############
         #STMOC
@@ -179,87 +161,6 @@ class merged_def():
             output_path='./STMOC/AA_stacked_STMOC.fits'
             stmoc_bat.write(output_path,format='fits')
 
-
-
-        ###############
-        #Offsets
-        ###############
-        best_fit_positon = skycoord_evt
-        CMatch = SkyCoord(crossmatched_cat.RA.values*u.deg, crossmatched_cat.DEC.values*u.deg)
-        offset=best_fit_positon.separation(CMatch)/u.deg
-
-        crossmatched_cat["offset"] = [float(item.value) for item in offset]
-        crossmatched_cat=crossmatched_cat.sort_values(by='offset', ascending=True)
-
-        ###############
-        #Offset closest
-        ###############
-        if len(crossmatched_cat)==0:
-            err_plus=float(err)+3
-            moc_evt_enhanced = MOC.from_cone(
-            lon=skycoord_evt.ra,
-            lat=skycoord_evt.dec,
-            radius=Angle(err_plus, u.deg),
-            max_depth=10
-            )
-            idx_inside_enhanced = moc_evt_enhanced.contains(cat_4FGL['_RAJ2000'].T * u.deg, cat_4FGL['_DEJ2000'].T * u.deg)
-            sources_inside_enhanced = cat_4FGL[idx_inside_enhanced]
-            moc_Cross_matched_enhanced = MOC.from_lonlat(sources_inside_enhanced['_RAJ2000'].T * u.deg, sources_inside_enhanced['_DEJ2000'].T * u.deg, 7)
-
-            dict_xmatch_enhanced = {'RA': sources_inside_enhanced['_RAJ2000'],
-                    'DEC': sources_inside_enhanced['_DEJ2000'],
-                    '_4FGL': sources_inside_enhanced['_4FGL'],
-                    'Cl1': sources_inside_enhanced['Cl1'],
-                    'VarInd': sources_inside_enhanced['VarInd'],
-                    'Assoc1': sources_inside_enhanced['Assoc1']}
-            crossmatched_cat=pd.DataFrame.from_dict(dict_xmatch_enhanced)
-
-            best_fit_positon = skycoord_evt
-            CMatch = SkyCoord(crossmatched_cat.RA.values*u.deg, crossmatched_cat.DEC.values*u.deg)
-            offset=best_fit_positon.separation(CMatch)/u.deg
-
-            crossmatched_cat["offset"] = [float(item.value) for item in offset]
-            crossmatched_cat=crossmatched_cat.sort_values(by='offset', ascending=True)
-            crossmatched_cat=crossmatched_cat.head(1)
-        ###############
-        #Redshift Xmatch
-        ###############
-        #filter_Assoc_nan=(crossmatched_cat['Assoc1']=='')
-        #df_filtered_nan = crossmatched_cat[filter_Assoc_nan]
-        #df_filtered_nan["Redshift (from NED)"] = np.nan
-        #df_filtered_nan["Assoc1"] = np.nan
-
-        lst = ['','CRATES J023819+153323', 'Sim 147', 'Rosette', 'Monoceros', 'CRATES J081705+195836', 'CRATES J112431+230745', 'CRATES J112916+370317', 'CRATES J113514+301001']
-        df_filtered_nan=crossmatched_cat.query('Assoc1 in @lst')
-        df_filtered_nan["Redshift (from NED)"] = np.nan
-        df_filtered_nan["Assoc1"] = np.nan
-        
-        df_filtered=crossmatched_cat.query('Assoc1 not in @lst')
-        
-        #filter_Assoc=(crossmatched_cat['Assoc1']!='')
-        #df_filtered = crossmatched_cat[filter_Assoc]
-        redshift_list=[]
-        for i in range(0,len(df_filtered)):
-            result_table = Ned.query_object(df_filtered['Assoc1'].values[i])
-            redshift=result_table['Redshift']#[0]
-            #print(df_filtered['Assoc1'].values[i])
-            redshift_list.append(redshift)
-        x=np.asarray(redshift_list)
-        xnan = np.ma.filled(x.astype(float), np.nan)  ## Does not work anymore....
-        #df_filtered["Redshift (from NED)"] = [item for item in xnan]
-        df_filtered["Redshift (from NED)"] = [item for item in x]
-
-        crossmatched_cat=pd.concat([df_filtered, df_filtered_nan])
-        
-        print('################################################################################################')
-        print('##################### crossmatched_cat #########################################################')
-        print('################################################################################################')
-        print(crossmatched_cat)
-        print('################################################################################################')
-        print('################################################################################################')
-        outname = 'Xmatched_list.csv'
-        fullname = os.path.join(outdir, outname)    
-        crossmatched_cat.to_csv(fullname, sep="\t", index = False, header=True)
         ###############
         #Figure 1
         ###############
@@ -271,9 +172,7 @@ class merged_def():
             rotation=Angle(0, u.degree),
             projection="AIT") as wcs:
             ax = fig.add_subplot(1, 1, 1, projection=wcs)
-        moc_Cross_matched.fill(ax=ax, wcs=wcs, alpha=0.8, fill=True, color="red", label='Xmatched')
-        moc_Cross_matched.border(ax=ax, wcs=wcs, alpha=0.8, fill=True, color="red")
-        moc_Swift_BAT.fill(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="grey", label='Track Event')
+        moc_Swift_BAT.fill(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="grey", label='SwiftBAT Event')
         moc_Swift_BAT.border(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="black")
         moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
         moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
@@ -288,14 +187,12 @@ class merged_def():
         fig = plt.figure(figsize=(10, 10))
         with WCS(fig, 
             fov=15 * u.deg,
-            center=SkyCoord(best_fit_positon.ra,best_fit_positon.dec, unit='deg', frame='icrs'),
+            center=SkyCoord(skycoord_evt.ra,skycoord_evt.dec, unit='deg', frame='icrs'),
             coordsys='icrs',
             rotation=Angle(0, u.degree),
             projection="AIT") as wcs:
             ax = fig.add_subplot(1, 1, 1, projection=wcs)
-        moc_Cross_matched.fill(ax=ax, wcs=wcs, alpha=0.8, fill=True, color="red", label='Xmatched')
-        moc_Cross_matched.border(ax=ax, wcs=wcs, alpha=0.8, fill=True, color="red")
-        moc_Swift_BAT.fill(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="grey", label='Track Event')
+        moc_Swift_BAT.fill(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="grey", label='SwiftBAT Event')
         moc_Swift_BAT.border(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="black")
         moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
         moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
@@ -313,7 +210,7 @@ class merged_def():
         outname = 'FOV_ROI.pdf'
         fullname = os.path.join(outdir, outname)    
         plt.savefig(fullname)
-        return crossmatched_cat, crossmatched_cat_glade2, outdir
+        return crossmatched_cat_glade2, outdir
 
     def Xmatched_raw_to_3Dplot(crossmatched_cat_glade2, outdir):
         ###############

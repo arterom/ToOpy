@@ -81,7 +81,7 @@ moc_of_swift = stmoc_swift.query_by_time(tmoc_swift)
 
 #moc_swift_MOC = stmoc_swift.query_by_time(Time([[stmoc_swift.min_time.iso, stmoc_swift.max_time.iso]], format="iso", scale="tdb"))
 text_file = open('./random.txt', 'w')
-text_file.write('BLa_Swift')
+text_file.write('Testing output')
 text_file.close()
 
 print('######################################################################################')
