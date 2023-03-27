@@ -149,12 +149,12 @@ with WCS(fig,
         projection="AIT") as wcs:
     ax = fig.add_subplot(1, 1, 1, projection=wcs)
     # Call fill with a matplotlib axe and the `~astropy.wcs.WCS` wcs object.
-    moc_of_intersect.fill(ax=ax, wcs=wcs, alpha=0.5, fill=True, color="blue", label='intersect')
+    moc_of_intersect.fill(ax=ax, wcs=wcs, alpha=0.5, fill=True, color="black", label='intersect')
     moc_of_intersect.border(ax=ax, wcs=wcs, alpha=0.5, color="black")
 
     moc_of_swift.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="red", label='Swift')
     moc_of_swift.border(ax=ax, wcs=wcs, alpha=0.5, color="black")
-    moc_of_gbm.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="green", label='GBM')
+    moc_of_gbm.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="grey", label='GBM')
     moc_of_gbm.border(ax=ax, wcs=wcs, alpha=0.5, color="black")
     #moc_gbm_MOC.fill(ax=ax, wcs=wcs, alpha=0.5, fill=True, color="green", label='GBM')
     #moc_gbm_MOC.border(ax=ax, wcs=wcs, alpha=0.5, color="black")
