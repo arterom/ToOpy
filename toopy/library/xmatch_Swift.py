@@ -176,7 +176,7 @@ class merged_def():
         moc_Swift_BAT.border(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="black")
         moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
         moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
-        ax.legend(prop={'size': 20})
+        ax.legend(prop={'size': 30}, loc='upper right')
         plt.grid(color="black", linestyle="dotted")
         outname = 'FOV_Galactic.pdf'
         fullname = os.path.join(outdir, outname)    
@@ -196,7 +196,7 @@ class merged_def():
         moc_Swift_BAT.border(ax=ax, wcs=wcs, alpha=0.2, fill=True, color="black")
         moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
         moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
-        ax.legend(prop={'size': 20})
+        ax.legend(prop={'size': 30}, loc='upper right')
         plt.grid(color="black", linestyle="dotted")
         plt.xlabel('RA', size=30)
         plt.ylabel('DEC', size=30)

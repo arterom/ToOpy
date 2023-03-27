@@ -143,7 +143,7 @@ fig = plt.figure(111, figsize=(15, 10))
 # Define a astropy WCS easily
 with WCS(fig, 
         fov=330 * u.deg,
-        center=SkyCoord(0, 0, unit='deg', frame='galactic'),
+        center=SkyCoord(0,0, unit='deg', frame='galactic'),
         coordsys="galactic",
         rotation=Angle(0, u.degree),
         projection="AIT") as wcs:
@@ -167,6 +167,40 @@ plt.legend()
 #plt.title('Query by time result')
 plt.grid(color="black", linestyle="dotted")
 outname = 'FOV_Galactic.pdf'  
+plt.savefig(outname)
+
+
+###############
+#Figure 2
+###############
+fig = plt.figure(figsize=(10, 10))
+with WCS(fig, 
+    fov=30 * u.deg,
+    center=SkyCoord(df_swift['RA_OBJ'][0], df_swift['DEC_OBJ'][0], unit='deg', frame='icrs'),
+    coordsys='icrs',
+    rotation=Angle(0, u.degree),
+    projection="AIT") as wcs:
+    ax = fig.add_subplot(1, 1, 1, projection=wcs)
+moc_of_intersect.fill(ax=ax, wcs=wcs, alpha=0.5, fill=True, color="black", label='intersect')
+moc_of_intersect.border(ax=ax, wcs=wcs, alpha=0.5, color="black")
+moc_of_swift.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="red", label='Swift')
+moc_of_swift.border(ax=ax, wcs=wcs, alpha=0.5, color="black")
+moc_of_gbm.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="grey", label='GBM')
+moc_of_gbm.border(ax=ax, wcs=wcs, alpha=0.5, color="black")
+moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
+moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
+ax.legend(prop={'size': 30}, loc='upper right')
+plt.grid(color="black", linestyle="dotted")
+plt.xlabel('RA', size=30)
+plt.ylabel('DEC', size=30)
+plt.xticks(color='black', fontsize=22)
+
+ax.coords.grid(True, color='black')
+#ax.coords[0].set_ticks(width=10)
+ax.coords[0].set_ticklabel(size="xx-large")
+#ax.coords[1].set_ticks(width=10)
+ax.coords[1].set_ticklabel(size="xx-large")
+outname = 'FOV_ROI.pdf'
 plt.savefig(outname)
 
 print('######################################################################################')

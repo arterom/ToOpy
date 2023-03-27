@@ -101,6 +101,7 @@ class merged_def():
         lat=skycoord_evt.dec,
         radius=Angle(SRC_ERROR50, u.deg),
         max_depth=10)
+        df_gbm['MOC_cone']=moc_evt_cone
         ###############
         #STMOC
         ###############
@@ -121,7 +122,7 @@ class merged_def():
         output_path='./STMOC/AA_df_gbm_STMOC_trial.csv'
         df_gbm.to_csv(output_path, mode='a', header=not os.path.exists(output_path))
 
-        stmoc_gbm = STMOC.from_spatial_coverages(t_gbm_start, t_gbm_end, df_gbm['MOC'])
+        stmoc_gbm = STMOC.from_spatial_coverages(t_gbm_start, t_gbm_end, df_gbm['MOC_cone'])
         print("Time of the first observation: ", stmoc_gbm.min_time.iso)
         print("Time of the last observation: ", stmoc_gbm.max_time.iso)
 
@@ -161,7 +162,7 @@ class merged_def():
             moc_evt_cone.border(ax=ax, wcs=wcs, alpha=0.5, fill=True, color="black")
             moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
             moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
-        ax.legend(prop={'size': 10})
+        ax.legend(prop={'size': 20}, loc='upper right')
         plt.grid(color="black", linestyle="dotted")
         outname = 'FOV_Galactic.pdf'
         fullname = os.path.join(outdir, outname)    
@@ -183,7 +184,7 @@ class merged_def():
         moc_evt_cone.border(ax=ax, wcs=wcs, alpha=0.5, fill=True, color="black")
         moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
         moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
-        ax.legend(prop={'size': 10})
+        ax.legend(prop={'size': 20}, loc='upper right')
         plt.grid(color="black", linestyle="dotted")
         plt.xlabel('RA', size=30)
         plt.ylabel('DEC', size=30)
