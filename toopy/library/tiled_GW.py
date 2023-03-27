@@ -108,10 +108,10 @@ class merged_def():
                          'Prob': 'np.nan',
                         'Tag':'Crab_check'}
         df_crab = pd.DataFrame(data=d_crab,index=[0])
-        spatial_coverage_Crab = MOC.from_cone(df_crab['RA'][0].T * u.deg,
-                                              df_crab['DEC'][0].T * u.deg,
-                                              FOV * u.deg, 9)
-        print(df_crab)
+        #spatial_coverage_Crab = MOC.from_cone(df_crab['RA'][0].T * u.deg,
+        #                                      df_crab['DEC'][0].T * u.deg,
+        #                                      FOV * u.deg, 9)
+        #print(df_crab)
         ##################################
         #Most Probable Sky Location 
         #Following ->https://emfollow.docs.ligo.org/userguide/tutorial/multiorder_skymaps.html#most-probable-sky-location
@@ -163,14 +163,14 @@ class merged_def():
                     ax = fig.add_subplot(1, 1, 1, projection=wcs)
                     moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
                     moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
-                    spatial_coverage_Crab.fill(ax=ax, wcs=wcs, alpha=0.1, color="red", fill=True, label='Pointing_on_Crab')
-                    spatial_coverage_Crab.border(ax=ax, wcs=wcs, alpha=0.5, fill=True)
+                    #spatial_coverage_Crab.fill(ax=ax, wcs=wcs, alpha=0.1, color="red", fill=True, label='Pointing_on_Crab')
+                    #spatial_coverage_Crab.border(ax=ax, wcs=wcs, alpha=0.5, fill=True)
                     #moc_radecgrid.fill(ax=ax, wcs=wcs, alpha=0.4, fill=True, color="red", label='RA & DEC Grid')
                     #moc_radecgrid.border(ax=ax, wcs=wcs, alpha=0.3, fill=True, color="black")
                     for (moc, c, col) in zip(moxses, cumul_to, colors):
                         moc.fill(ax=ax, wcs=wcs, alpha=0.5, linewidth=0, fill=True, color=col, label='confidence probability ' + str(round(c*100)) + '%')
                         moc.border(ax=ax, wcs=wcs, alpha=0.5, color=col)
-                    ax.legend()
+                    ax.legend(prop={'size': 20}, loc='upper right')
                 plt.xlabel('RA')
                 plt.ylabel('DEC')
                 plt.title('Bayestar')
@@ -238,22 +238,22 @@ class merged_def():
                     fig = plt.figure(figsize=(15, 10))
                     with WCS(fig, 
                         fov=360 * u.deg,
-                        center=SkyCoord(-30,0, unit='deg', frame='galactic'),
+                        center=SkyCoord(0,0, unit='deg', frame='galactic'),
                         coordsys='galactic',
                         rotation=Angle(0, u.degree),
                         projection="AIT") as wcs:
                         ax = fig.add_subplot(1, 1, 1, projection=wcs)
                     moc_4FGL.fill(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="blue", label='4FGL')
                     moc_4FGL.border(ax=ax, wcs=wcs, alpha=0.1, fill=True, color="black")
-                    start_moc.fill(ax=ax, wcs=wcs, alpha=0.6, color='black', fill=True, label='To be Covered')
+                    start_moc.fill(ax=ax, wcs=wcs, alpha=0.6, color='black', fill=True, label='To be covered')
                     start_moc.border(ax=ax, wcs=wcs, alpha=0.6, color='black', fill=True, label='')
                     spatial_coverages_pointing.fill(ax=ax, wcs=wcs, alpha=0.1, color="blue", fill=True, label='Pointing_# '+str(i))
                     spatial_coverages_pointing.border(ax=ax, wcs=wcs, alpha=0.5, fill=True)
-                    spatial_coverage_Crab.fill(ax=ax, wcs=wcs, alpha=0.1, color="red", fill=True, label='Pointing_on_Crab')
-                    spatial_coverage_Crab.border(ax=ax, wcs=wcs, alpha=0.5, fill=True)
+                    #spatial_coverage_Crab.fill(ax=ax, wcs=wcs, alpha=0.1, color="red", fill=True, label='Pointing_on_Crab')
+                    #spatial_coverage_Crab.border(ax=ax, wcs=wcs, alpha=0.5, fill=True)
                     moc_radecgrid_new.fill(ax=ax, wcs=wcs, alpha=0.8, fill=True, color="red", label='RA & DEC Grid')
                     moc_radecgrid_new.border(ax=ax, wcs=wcs, alpha=0.5, fill=True, color="black")
-                    ax.legend(prop={'size': 15})
+                    ax.legend(prop={'size': 20}, loc='upper right')
                     plt.grid(color="black", linestyle="dotted")
                     outname = 'Pointing_# '+str(i)+'.pdf'
                     fullname = os.path.join(outdir, outname)    

@@ -329,7 +329,7 @@ class merged_def2():
         ################### 
         ################### FIGURE
         if mode == 'diagnostic':
-            fig, ax = plt.subplots(figsize=(10,5))
+            fig, ax = plt.subplots(figsize=(15,10))
             ax.imshow(c_fin, extent=extent)
 
             ax.set_yticks(range(0, len(targets)))
@@ -340,13 +340,14 @@ class merged_def2():
             ax.set_yticks(np.arange(extent[2], extent[3]), minor=True)
 
 
-            plt.xticks(color='black', fontsize=20)
-            plt.yticks(color='black', fontsize=20)
+            plt.xticks(color='black', fontsize=15)
+            plt.yticks(color='black', fontsize=15)
             ax.grid(which='minor', color='grey', linestyle='-', linewidth=2)
             ax.tick_params(axis='x', which='minor', bottom='off')
             plt.setp(ax.get_xticklabels(), rotation=30, ha='right')
             ax.tick_params(axis='y', which='minor', left='off')
             fig.subplots_adjust(left=0.35, right=0.9, top=0.9, bottom=0.1)
+            #ax.set_xlabel("Time from ")
             outname = 'Observability_TimeGrid_@'+str(observatory)+'.pdf'
             fullname = os.path.join(outdir, outname)    
             plt.savefig(fullname)
