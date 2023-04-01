@@ -83,7 +83,7 @@ Step 1: Modifiy "toopy_gcn_listener_main.py"
 
 -> Comment line '444'
 
--> Uncomment a given alert (lines 447-452)
+-> Uncomment a given alert (lines 447-450)
 
 -> Uncomment line 453 & 454
 
@@ -92,12 +92,7 @@ Step 1: Modifiy "toopy_gcn_listener_main.py"
 #gcn.listen(handler=handler)
 
 # Templates for test alerts
-#payload = open('./xml_test_alerts/FermiGBM/test_GBM_SubTresh.xml', 'rb').read()
-#payload = open('./xml_test_alerts/FermiGBM/test_GBM_Final_Feb23.xml', 'rb').read()
-#payload = open('./xml_test_alerts/GW/test_GW_nuniq.xml', 'rb').read()
-#payload = open('./xml_test_alerts/IceCube_TRACK/GOLD_Aug11_Rev0.xml', 'rb').read()
 #payload = open('./xml_test_alerts/IceCube_CASCADE/2021/CASCADE_Dez21.xml', 'rb').read()
-#payload = open('./xml_test_alerts/SwiftBAT/SwiftBAT_Feb23.xml', 'rb').read()
 
 root = lxml.etree.fromstring(payload)
 handler(payload, root)
