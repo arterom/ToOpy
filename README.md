@@ -11,13 +11,13 @@ $ `git clone https://github.com/fermiPy/fermipy.git`
 
 $ `cd fermipy`
 
-$ `cp ../toopy/conda_environment.yml .` Or copy "conda_environment.yml" file from toopy folder to newly created fermipy folder.
+$ `cp ../toopy/conda_environment.yml .`
 
-$ `conda env create -f conda_environment.yml` ***
+$ `conda env create -f conda_environment.yml`
 
 $ `conda activate toopy`
 
-$ `python setup.py install` Installing fermipy package
+$ `python setup.py install` ## installing fermipy package
 
 # -------------------------
 # -------------------------
