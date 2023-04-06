@@ -3,7 +3,6 @@ The algorithm is aimed at combining the functionality of a data Broker and obser
 # -------------------------
 # -------------------------
 ## Setting up the environment
-### fermipy compatible
 Setting up conda environment with the right dependencies:
 
 $ `git clone https://github.com/arterom/ToOpy.git`
