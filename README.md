@@ -24,7 +24,7 @@ $ `python setup.py install` ## installing fermipy package
 
 ## Quickstart Guide
 
-$ `cd ../toopy`
+$ `cd ../ToOpy/toopy`
 
 $ `conda activate toopy`
 
