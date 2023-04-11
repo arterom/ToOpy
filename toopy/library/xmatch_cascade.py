@@ -187,11 +187,14 @@ class merged_def():
             #result_table = Ned.query_object(df_filtered['Assoc1'].values[i])
             #redshift=result_table['Redshift']#[0]
             redshift=helper_NED_query.query_NED_object(df_filtered['Assoc1'].values[i])
+            #print(redshift)
             redshift_list.append(redshift)
-        x=np.asarray(redshift_list)
+        #print(redshift_list)
+        #x=np.asarray(redshift_list)
+        #print(x)
         #xnan = np.ma.filled(x.astype(float), np.nan) ## Does not work anymore....
         #df_filtered["Redshift (from NED)"] = [item for item in xnan]
-        df_filtered["Redshift (from NED)"] = [item for item in x]
+        df_filtered["Redshift (from NED)"] = [item for item in redshift_list]
         
         crossmatched_cat=pd.concat([df_filtered, df_filtered_nan])
         ###############
@@ -214,7 +217,7 @@ class merged_def():
         #Figure 1
         ###############
         fig = plt.figure(figsize=(10,10))
-        with World2ScreenMPL(fig, 
+        with WCS(fig, 
                 fov=330 * u.deg,
                 center=SkyCoord(0,0, unit='deg', frame='galactic'),
                 coordsys='galactic',
@@ -236,7 +239,7 @@ class merged_def():
         plt.savefig(fullname)
         
         fig = plt.figure(figsize=(10, 10))
-        with World2ScreenMPL(fig, 
+        with WCS(fig, 
             fov=50 * u.deg,
             center=SkyCoord(RA_header,DEC_header, unit='deg', frame='icrs'),
             coordsys='icrs',
@@ -356,7 +359,7 @@ class merged_def():
         positions = SkyCoord(crossmatched_cat['RA'].values*u.deg, crossmatched_cat['DEC'].values*u.deg)
         spatial_coverages = [MOC.from_cone(pos.ra, pos.dec, 3.5 * u.deg, 7) for pos in positions]
         fig = plt.figure(figsize=(5,5))
-        with World2ScreenMPL(fig, 
+        with WCS(fig, 
                 fov=360 * u.deg,
                 #center=SkyCoord(positions.ra[0],positions.dec[0], unit='deg', frame='galactic'),
                 center=SkyCoord(0,0, unit='deg', frame='galactic'),
@@ -442,7 +445,7 @@ class merged_def():
         positions = SkyCoord(crossmatched_cat['RA'].values*u.deg, crossmatched_cat['DEC'].values*u.deg)
         spatial_coverages = [MOC.from_cone(pos.ra, pos.dec, 3.5 * u.deg, 7) for pos in positions]
         fig = plt.figure(figsize=(5,5))
-        with World2ScreenMPL(fig, 
+        with WCS(fig, 
                 fov=360 * u.deg,
                 #center=SkyCoord(positions.ra[0],positions.dec[0], unit='deg', frame='galactic'),
                 center=SkyCoord(0,0, unit='deg', frame='galactic'),
