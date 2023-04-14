@@ -14,7 +14,7 @@ dependencies:
   - healpy
   - astropy-healpix
   - gammapy>=0.18
-  - pandas
+  - pandas==1.5.3
   - mocpy
   - astroquery
   - astroplan
