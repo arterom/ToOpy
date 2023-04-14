@@ -22,3 +22,5 @@ dependencies:
   - fermitools>=2.2.0
   - pip:
     - astrotools
+    - tk
+    - customtkinter
