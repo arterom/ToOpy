@@ -73,8 +73,8 @@ class App(customtkinter.CTk):
         self.button_2.grid(row=2, column=0, padx=20, pady=(10, 10))
 
         self.textbox.insert("0.0","Experimental GUI in order to facilitate the use of ToOpy (for now works with reference alerts that are processed through .sh scripts)." "\n\n" + 
-        	"How to Use:\n" + "1). Select alert streams from the tabview below and run pre-defined scripts by pushing run buttons\n" + 
-        	"2). Process reference alerts by pushing the corresponding buttons \n" + "3). Check updated output folders shown in the figure at the bottom (note that ToOpy might be still running (especially for Fermi-LAT analysis)")
+        	"How to Use:\n" + "1). Select alert streams from the tabview below\n" + 
+        	"2). Process reference alerts from pre-defined '*.sh' scripts by pushing the corresponding buttons \n" + "3). Check updated output folders shown in the figure at the bottom (note that ToOpy might be still running (especially for Fermi-LAT analysis)")
 
 
     def initalize_Reference_GW(self):
