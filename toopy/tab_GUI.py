@@ -5,6 +5,7 @@ import subprocess
 from PIL import Image
 import os
 import time
+from tkinter.messagebox import askokcancel, showinfo, WARNING
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
@@ -32,6 +33,13 @@ class App(customtkinter.CTk):
         self.tabview.add("Neutrino Alert")
         self.tabview.add("Swift-BAT")
         self.tabview.add("Fermi-GBM")
+
+
+
+        self.string_input_button_swift = customtkinter.CTkButton(self.tabview.tab("Swift-BAT"), command=self.random, text="Execute for Swift-BAT")
+        self.string_input_button_swift.grid(row=1, column=0, padx=20, pady=(10, 10))
+
+
 
 
 
@@ -78,7 +86,19 @@ class App(customtkinter.CTk):
         self.large_test_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "ToOpy.png")), size=(1000, 300))
         self.home_frame_large_image_label = customtkinter.CTkLabel(self, text="", image=self.large_test_image)
         self.home_frame_large_image_label.grid(row=2, column=0, padx=(20, 0), pady=(20, 0), sticky="nsew")
+    
+    def random(self):
+        print('x')
+        answer = askokcancel(
+            title='Confirmation',
+            message='Running Fermi-LAT Analysis will take some time.',
+            icon=WARNING)
 
+        if answer:
+            print('yes to running')
+            showinfo(
+                title='Deletion Status',
+                message='ToOpy is processing the data please standby')
 
     def initalize_Reference_IC170922A_ROI(self):
         print('x')
@@ -99,12 +119,27 @@ class App(customtkinter.CTk):
     def input_gw_event(self):
         dialog = customtkinter.CTkInputDialog(text="Add conditions in the following format: ...", title="Confirmation")
         print("This is fed into .sh Scripts:", dialog.get_input())
-        
+
+    #def input_neutrino_event_IC170922A_HE(self):
+    #    dialog = customtkinter.CTkInputDialog(text="Carefull this will take time to run", title="Progress")
+    #    print("This is fed into .sh Scripts:", dialog.get_input())
+    #    subprocess.check_call('chmod u+r+x initalize_Reference_IC170922A_HE.sh', shell=True)
+    #    subprocess.check_call('./initalize_Reference_IC170922A_HE.sh', shell=True)
+
     def input_neutrino_event_IC170922A_HE(self):
-        dialog = customtkinter.CTkInputDialog(text="Carefull this will take time to run", title="Progress")
-        print("This is fed into .sh Scripts:", dialog.get_input())
-        subprocess.check_call('chmod u+r+x initalize_Reference_IC170922A_HE.sh', shell=True)
-        subprocess.check_call('./initalize_Reference_IC170922A_HE.sh', shell=True)
+        print('x')
+        answer = askokcancel(
+            title='Confirmation',
+            message='Running Fermi-LAT Analysis will take some time.',
+            icon=WARNING)
+
+        if answer:
+            print('yes to running')
+            subprocess.check_call('chmod u+r+x initalize_Reference_IC170922A_HE.sh', shell=True)
+            subprocess.check_call('./initalize_Reference_IC170922A_HE.sh', shell=True)
+            showinfo(
+                title='Deletion Status',
+                message='ToOpy is processing the alert please check command line and output folders')
 
     def input_neutrino_event_Track(self):
         dialog = customtkinter.CTkInputDialog(text="VarInd or HE?", title="Progress")
