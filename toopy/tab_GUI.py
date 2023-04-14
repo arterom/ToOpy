@@ -36,8 +36,8 @@ class App(customtkinter.CTk):
 
 
 
-        self.string_input_button_swift = customtkinter.CTkButton(self.tabview.tab("Swift-BAT"), command=self.random, text="Execute for Swift-BAT")
-        self.string_input_button_swift.grid(row=1, column=0, padx=20, pady=(10, 10))
+        #self.string_input_button_swift = customtkinter.CTkButton(self.tabview.tab("Swift-BAT"), command=self.random, text="Execute for Swift-BAT")
+        #self.string_input_button_swift.grid(row=1, column=0, padx=20, pady=(10, 10))
 
 
 
@@ -87,18 +87,6 @@ class App(customtkinter.CTk):
         self.home_frame_large_image_label = customtkinter.CTkLabel(self, text="", image=self.large_test_image)
         self.home_frame_large_image_label.grid(row=2, column=0, padx=(20, 0), pady=(20, 0), sticky="nsew")
     
-    def random(self):
-        print('x')
-        answer = askokcancel(
-            title='Confirmation',
-            message='Running Fermi-LAT Analysis will take some time.',
-            icon=WARNING)
-
-        if answer:
-            print('yes to running')
-            showinfo(
-                title='Deletion Status',
-                message='ToOpy is processing the data please standby')
 
     def initalize_Reference_IC170922A_ROI(self):
         print('x')
