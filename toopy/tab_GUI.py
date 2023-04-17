@@ -57,7 +57,7 @@ class App(customtkinter.CTk):
         self.Button_IC170922A_ROI.grid(row=1, column=0, padx=20, pady=(10, 10))
 
 
-        self.Button_IC220303A_HE = customtkinter.CTkButton(self.tabview.tab("Neutrino Alert"), text="Run for IC220303A_HE",command=self.input_neutrino_event_IC220303A_HE)
+        self.Button_IC220303A_HE = customtkinter.CTkButton(self.tabview.tab("Neutrino Alert"), text="Run for IC220303A_HE (with LC)",command=self.input_neutrino_event_IC220303A_HE)
         self.Button_IC220303A_HE.grid(row=2, column=0, padx=20, pady=(10, 10))
 
         self.Button_IC220303A_ROI = customtkinter.CTkButton(self.tabview.tab("Neutrino Alert"), text="Run for IC220303A_ROI",command=self.input_neutrino_event_IC220303A_ROI)
@@ -200,7 +200,7 @@ class App(customtkinter.CTk):
     def input_neutrino_event_IC220303A_HE(self):
         answer = askokcancel(
             title='Confirmation',
-            message='Running Fermi-LAT Analysis will take some time.',
+            message='Running Fermi-LAT Analysis will take some time (extra time for light curve).',
             icon=WARNING)
         if answer:
             subprocess.check_call('chmod u+r+x initalize_Reference_IC220303A_HE.sh', shell=True)
