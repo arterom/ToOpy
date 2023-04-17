@@ -29,7 +29,7 @@ $ `cd ../ToOpy/toopy`
 
 $ `python tab_GUI.py`
 
-![Model](toopy/documentation_images/ToOpy.png)
+![Model](toopy/documentation_images/experimental_GUI.png)
 
 # -------------------------
 # -------------------------
