@@ -20,7 +20,6 @@ $ `python setup.py install` ## installing fermipy package
 
 
 # -------------------------
-# -------------------------
 
 ## Testing Guide with GUI (Beginner)
 
@@ -30,7 +29,6 @@ $ `python tab_GUI.py`
 
 ![Model](toopy/documentation_images/experimental_GUI.png)
 
-# -------------------------
 # -------------------------
 
 ## Testing Guide with .sh scripts (Advanced)
@@ -80,7 +78,6 @@ python crossmatch_ranked.py \
 
 Step 2: $ `./initalize_Reference_IC170922A.sh`
 
-# -------------------------
 # -------------------------
 
 
