@@ -163,7 +163,7 @@ class merged_def():
             #Figure NESTED
             ###############
             fig = plt.figure(figsize=(10,10))
-            with World2ScreenMPL(fig, 
+            with WCS(fig, 
                     fov=330 * u.deg,
                     center=SkyCoord(0,0, unit='deg', frame='galactic'),
                     coordsys='galactic',
@@ -249,7 +249,7 @@ class merged_def():
             #Figure NUNIQ
             ###############
             fig = plt.figure(111, figsize=(15, 10))
-            with World2ScreenMPL(fig, 
+            with WCS(fig, 
                     fov=330 * u.deg,
                     center=SkyCoord(0,0, unit='deg', frame='galactic'),
                     coordsys='galactic',
