@@ -16,7 +16,7 @@ $ `conda env create -f conda_environment.yml`
 
 $ `conda activate toopy`
 
-$ `python setup.py install` ## installing fermipy package
+$ `python setup.py install`
 
 
 # -------------------------
@@ -36,11 +36,11 @@ $ `python tab_GUI.py`
 ### Option 1; Testing pipeline with test alerts from ".xml" files
 Step 1: Modifiy "toopy_gcn_listener_main.py"
 
--> Comment line '444'
+-> Comment out 'gcn.listen(handler=handler)'
 
--> Uncomment a given alert (lines 447-450)
+-> Uncomment/edit a Cascade alert
 
--> Uncomment line 453 & 454
+-> Uncomment the last two line
 
 ```
 # Listen for VOEvents until killed with Control-C.
@@ -55,7 +55,7 @@ handler(payload, root)
 
 Step 2: $ `python toopy_gcn_listener_main.py`
 
-### Option 2; Testing pipeline with test alerts from script (for Track-like alerts)
+### Option 2; Testing pipeline with test alerts from script.
 Step 1: Edit "initalize_Reference_IC170922A_ROI.sh" according to user preferences:
 ```
 echo 'Give it a couple of seconds to wake up....;)'
@@ -83,11 +83,7 @@ Step 2: $ `./initalize_Reference_IC170922A.sh`
 
 ## Set-Up Guide for GCN-Listener
 
-$ `cd ../ToOpy/toopy`
-
-$ `conda activate toopy`
-
-## User preferences
+# User preferences
 Edit lines 27-43 in "toopy_gcn_listener_main.py" according to user preferences:
 ```
 # General Constraints
