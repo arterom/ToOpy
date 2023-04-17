@@ -8,5 +8,5 @@ python crossmatch_ranked.py \
 -vol 0.9 \
 -url 'https://heasarc.gsfc.nasa.gov/FTP/fermi/data/gbm/triggers/2022/bn221201517/quicklook/glg_healpix_all_bn221201517.fit' \
 -catalog 'IX/67/4fgldr3' \
--ranking_method 'STMOC' \
+-ranking_method 'Xmatch' \
 -TransNum_TrigID 691590290 &

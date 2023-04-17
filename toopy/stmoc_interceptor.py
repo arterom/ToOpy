@@ -118,7 +118,7 @@ print('#########################################################################
 print('################################################ intersect ###############################')
 print('######################################################################################')
 intersect_snt = stmoc_swift.intersection(stmoc_gbm)
-print(str(intersect_snt.is_empty()))
+print('Is the intersection empty? '+str(intersect_snt.is_empty()))
 
 print("Time of the first observation: ", intersect_snt.min_time.iso)
 print("Time of the last observation: ", intersect_snt.max_time.iso)

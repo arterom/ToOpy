@@ -31,15 +31,8 @@ class App(customtkinter.CTk):
         #self.tabview = customtkinter.CTkLabel(master=self.tabview, text="ghjgjhgj Group:")
         self.tabview.add("GW Alert")
         self.tabview.add("Neutrino Alert")
-        self.tabview.add("Swift-BAT")
-        self.tabview.add("Fermi-GBM")
-
-
-
-        #self.string_input_button_swift = customtkinter.CTkButton(self.tabview.tab("Swift-BAT"), command=self.random, text="Execute for Swift-BAT")
-        #self.string_input_button_swift.grid(row=1, column=0, padx=20, pady=(10, 10))
-
-
+        self.tabview.add("Swift-BAT Alert")
+        self.tabview.add("Fermi-GBM Alert")
 
 
 
@@ -49,18 +42,11 @@ class App(customtkinter.CTk):
         self.home_frame_large_image_label.grid(row=2, column=0, padx=(20, 0), pady=(20, 0), sticky="nsew")
 
 
-        #self.string_input_button = customtkinter.CTkButton(self.tabview.tab("GW Alert"), command=self.input_gw_event, text="Execute for GW")
-        #self.string_input_button.grid(row=1, column=0, padx=20, pady=(10, 10))
         self.Button_GW_tilling = customtkinter.CTkButton(self.tabview.tab("GW Alert"), command=self.input_gw_event_GW_tilling, text="Run tilling-approach")
         self.Button_GW_tilling.grid(row=0, column=0, padx=20, pady=(10, 10))
 
         self.Button_GW_targeted = customtkinter.CTkButton(self.tabview.tab("GW Alert"), command=self.input_gw_event_GW_targeted, text="Run targeted-approach")
         self.Button_GW_targeted.grid(row=1, column=0, padx=20, pady=(10, 10))
-
-
-
-        #self.string_input_button_Track = customtkinter.CTkButton(self.tabview.tab("Neutrino Alert"), text="Execute for Track",command=self.input_neutrino_event_Track)
-        #self.string_input_button_Track.grid(row=0, column=0, padx=20, pady=(10, 10))
 
 
 
@@ -76,6 +62,22 @@ class App(customtkinter.CTk):
 
         self.Button_IC220303A_ROI = customtkinter.CTkButton(self.tabview.tab("Neutrino Alert"), text="Run for IC220303A_ROI",command=self.input_neutrino_event_IC220303A_ROI)
         self.Button_IC220303A_ROI.grid(row=3, column=0, padx=20, pady=(10, 10))
+
+
+
+
+
+        self.Button_GBM_targeted = customtkinter.CTkButton(self.tabview.tab("Fermi-GBM Alert"), command=self.input_event_GBM_targeted, text="Run targeted-approach")
+        self.Button_GBM_targeted.grid(row=0, column=0, padx=20, pady=(10, 10))
+
+        self.Button_GBM_STMOC = customtkinter.CTkButton(self.tabview.tab("Fermi-GBM Alert"), command=self.input_event_GBM_STMOC, text="Run STMOC-approach")
+        self.Button_GBM_STMOC.grid(row=1, column=0, padx=20, pady=(10, 10))
+
+        self.Button_BAT_targeted = customtkinter.CTkButton(self.tabview.tab("Swift-BAT Alert"), command=self.input_event_BAT_targeted, text="Run targeted-approach")
+        self.Button_BAT_targeted.grid(row=0, column=0, padx=20, pady=(10, 10))
+
+        self.Button_BAT_STMOC = customtkinter.CTkButton(self.tabview.tab("Swift-BAT Alert"), command=self.input_event_BAT_STMOC, text="Run STMOC-approach")
+        self.Button_BAT_STMOC.grid(row=1, column=0, padx=20, pady=(10, 10))
 
         #self.button_2 = customtkinter.CTkButton(self.tabview.tab("Neutrino Alert"), command=self.initalize_Reference_IC170922A_ROI, text="Run Track VarInd")
         #self.button_2.grid(row=2, column=0, padx=20, pady=(10, 10))
@@ -108,6 +110,9 @@ class App(customtkinter.CTk):
                 showinfo(
                     title='Progressing',
                     message='ToOpy is processing the alert please check command line and output folders')
+
+
+
 
 
     def initalize_Reference_GW(self):
@@ -209,13 +214,63 @@ class App(customtkinter.CTk):
     #    if (print(dialog.get_input()) == "VarInd"):
     #    	print('x')
 
+    def input_event_GBM_targeted(self):
+        answer = askokcancel(
+            title='Confirmation',
+            message='Crossmatching alert with galaxy catalog and checking observability from Roque de los Muchachos.',
+            icon=WARNING)
+        if answer:
+            subprocess.check_call('chmod u+r+x initalize_Reference_GBM_targeted.sh', shell=True)
+            subprocess.check_call('./initalize_Reference_GBM_targeted.sh', shell=True)
+            showinfo(
+                title='Progressing',
+                message='ToOpy is processing the alert please check command line and output folders')
 
 
-        argument_list = dialog.get_input()
-        print(argument_list)
+    def input_event_GBM_STMOC(self):
+            answer = askokcancel(
+                title='Confirmation',
+                message='Initalize STMOC method and check for spatio-temporal coincidences with other alerts.',
+                icon=WARNING)
+            if answer:
+                subprocess.check_call('chmod u+r+x initalize_Reference_GBM_STMOC.sh', shell=True)
+                subprocess.check_call('./initalize_Reference_GBM_STMOC.sh', shell=True)
+                showinfo(
+                    title='Progressing',
+                    message='ToOpy is processing the alert please check command line and output folders')
+
+
+
+    def input_event_BAT_targeted(self):
+        answer = askokcancel(
+            title='Confirmation',
+            message='Crossmatching alert with galaxy catalog and checking observability from Roque de los Muchachos.',
+            icon=WARNING)
+        if answer:
+            subprocess.check_call('chmod u+r+x initalize_Reference_BAT_targeted.sh', shell=True)
+            subprocess.check_call('./initalize_Reference_BAT_targeted.sh', shell=True)
+            showinfo(
+                title='Progressing',
+                message='ToOpy is processing the alert please check command line and output folders')
+
+
+    def input_event_BAT_STMOC(self):
+            answer = askokcancel(
+                title='Confirmation',
+                message='Initalize STMOC method and check for spatio-temporal coincidences with other alerts.',
+                icon=WARNING)
+            if answer:
+                subprocess.check_call('chmod u+r+x initalize_Reference_BAT_STMOC.sh', shell=True)
+                subprocess.check_call('./initalize_Reference_BAT_STMOC.sh', shell=True)
+                showinfo(
+                    title='Progressing',
+                    message='ToOpy is processing the alert please check command line and output folders')
+
+        #argument_list = dialog.get_input()
+        #print(argument_list)
         #argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), 'VarInd', fermitools_refdata_path, 'no']
-        separator = " "
-        subprocess.check_call("./method_scripts/IceCube_TRACK.sh %s" % separator.join(argument_list), shell=True)
+        #separator = " "
+        #subprocess.check_call("./method_scripts/IceCube_TRACK.sh %s" % separator.join(argument_list), shell=True)
 
 if __name__ == "__main__":
     app = App()

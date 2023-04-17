@@ -28,8 +28,6 @@ from mocpy import WCS
 #vizier
 from astroquery.vizier import VizierClass
 #helper
-from library.helper import observability_gbm
-from library.helper import observability_gbm_gladePlus
 ######################################################################################
 ######################################################################################
 # Functions
@@ -77,10 +75,10 @@ class merged_def():
         ###############
         #Rankings
         ###############
-        if rank == 'Xmatch':
-            outdir = './GBM_Alert/Xmatch/TRes'+str(t_res)+str('hrs')+'_&_'+str(START)+'_&_'+str(trans_Num)
-            if not os.path.exists(outdir):
-                os.mkdir(outdir)
+        #if rank == 'Xmatch':
+        outdir = './GBM_Alert/Xmatch/TRes'+str(t_res)+str('hrs')+'_&_'+str(START)+'_&_'+str(trans_Num)
+        if not os.path.exists(outdir):
+            os.mkdir(outdir)
         ###############
         #4FGL
         ###############
@@ -102,7 +100,49 @@ class merged_def():
         radius=Angle(SRC_ERROR50, u.deg),
         max_depth=10)
         df_gbm['MOC_cone']=moc_evt_cone
-    
+        ###############
+        #STMOC
+        ###############
+        outdir_stmoc = './STMOC'
+        if not os.path.exists(outdir_stmoc):
+            os.mkdir(outdir_stmoc)
+        string_list_gbm=[]
+        for i in range(0,len(df_gbm)):
+            string=str(df_gbm['DATE-OBS'].values[i])
+            string_list_gbm.append(string)
+        times_gbm = Time(string_list_gbm, format='isot', scale='utc')
+        dt_iso_gbm = TimeDelta(200, format='sec')
+        t_gbm_start=times_gbm-dt_iso_gbm
+        t_gbm_end=times_gbm+dt_iso_gbm
+        df_gbm['STMOC_gbm_start']=t_gbm_start
+        df_gbm['STMOC_gbm_stop']=t_gbm_end
+
+        output_path='./STMOC/AA_df_gbm_STMOC_trial.csv'
+        df_gbm.to_csv(output_path, mode='a', header=not os.path.exists(output_path))
+
+        stmoc_gbm = STMOC.from_spatial_coverages(t_gbm_start, t_gbm_end, df_gbm['MOC_cone'])
+        print("Time of the first observation: ", stmoc_gbm.min_time.iso)
+        print("Time of the last observation: ", stmoc_gbm.max_time.iso)
+
+        output_path='./STMOC/GBM_TransNum_'+str(trans_Num)+'_STMOC.fits'
+        stmoc_gbm.write(output_path,format='fits', overwrite=True)
+
+        #Stacked
+        #stacked_STMOC=STMOC.from_fits('./GBM_Alert/stacked_STMOC.fits')
+        #restacked_STMOC=stmoc_gbm.union(stacked_STMOC)
+        #output_path='./GBM_Alert/stacked_STMOC.fits'
+        #restacked_STMOC.write(output_path,format='fits', overwrite=True)
+
+        if os.path.isfile('./STMOC/AA_stacked_STMOC.fits'):
+            print ("File does exist")
+            stacked_STMOC=STMOC.from_fits('./STMOC/AA_stacked_STMOC.fits')
+            restacked_STMOC=stmoc_gbm.union(stacked_STMOC)
+            output_path='./STMOC/AA_stacked_STMOC.fits'
+            restacked_STMOC.write(output_path,format='fits', overwrite=True)
+        else:
+            print ("File does not exist")
+            output_path='./STMOC/AA_stacked_STMOC.fits'
+            stmoc_gbm.write(output_path,format='fits')
         ###############
         #Figure 1
         ###############
@@ -247,43 +287,4 @@ class merged_def():
         return outdir
 
    
-    def Xmatched_top10_BMag_to_obslist_glade2(event, observatory, crossmatched_cat, zenith, moon_sep, hdul1, time_resolution, outdir):
-        ###############
-        #Event
-        ###############
-        filename = download_file(event, cache=True)
-        hdul1_n = fits.open(event)
-        print(hdul1_n)
-        print('This is zenith:'+str(zenith))
-        print('This is time_resolution:'+str(time_resolution))
-        crossmatched_cat=crossmatched_cat.sort_values(by='Bmag', ascending=False)
-        crossmatched_cat=crossmatched_cat.head(10)
-        ###############
-        #Observability
-        ###############
-        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_gbm.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, time_resolution, outdir)
-        ###############
-        #Pandas
-        ###############
-        listed_obs=[]
-        for i in range(0, len(c_fin)):
-            dict = {'RA': crossmatched_cat.RA.values[i],
-            'DEC': crossmatched_cat.DEC.values[i],
-            'dist': crossmatched_cat.dist.values[i],
-            'Bmag': crossmatched_cat.Bmag.values[i],
-            'HyperLEDA': crossmatched_cat.HyperLEDA.values[i],
-            'Observable?': [item for item in c_fin[i]],
-            'Observing Night': [t.datetime.strftime("%D") for t in time_grid],
-            'Observatory': observatory,
-            'Timeslot':[t.datetime.strftime("%H:%M") for t in time_grid],
-            'Airmass': airmass,
-            'Altitude': altitude,
-            'Zenith': zenith}
-            #'offset': crossmatched_cat.offset.values[i]}     
-            observability_df=pd.DataFrame(dict, index = [item for item in c_fin[i]])
-            listed_obs.append(observability_df)
-        listed_obs=pd.concat(listed_obs)
-        fin_df=listed_obs.loc[True]
-        outname = 'Glade2_Observability_@'+str(observatory)+'.csv'
-        fullname = os.path.join(outdir, outname)    
-        fin_df.to_csv(fullname, sep="\t", index = False, header=True)
+   

@@ -4,9 +4,11 @@ python crossmatch_ranked.py \
 -zenith 50 \
 -moon_separation 30 \
 -time_res 1 \
--flavour GBM \
--vol 0.9 \
--url 'https://heasarc.gsfc.nasa.gov/FTP/fermi/data/gbm/triggers/2022/bn221201517/quicklook/glg_healpix_all_bn221201517.fit' \
+-flavour BAT \
+-ra 266.933 \
+-dec '-68.260' \
+-error 3 \
+-obs_night 59914.51831019 \
 -catalog 'IX/67/4fgldr3' \
 -ranking_method 'STMOC' \
--TransNum_TrigID 691590290 &
+-TransNum_TrigID 1142847 &

@@ -21,8 +21,6 @@ from mocpy import WCS
 from astroquery.vizier import VizierClass
 from astroquery.ned import Ned
 #helper
-from library.helper import observability_swift
-
 from astropy.time import Time
 from astropy.time import TimeDelta
 ######################################################################################
@@ -115,6 +113,51 @@ class merged_def():
         print('################################################################################################')
         print('################################################################################################')
         
+
+        ###############
+        #STMOC
+        ###############
+        outdir_stmoc = './STMOC'
+        if not os.path.exists(outdir_stmoc):
+            os.mkdir(outdir_stmoc)
+        string_list_swift_bat=[]
+        for i in range(0,len(df_swift)):
+            string=str(df_swift['DATE-OBS'].values[i])
+            string_list_swift_bat.append(string)
+        times_bat = Time(string_list_swift_bat, format='isot', scale='utc')
+        dt_iso_bat = TimeDelta(200, format='sec')
+        t_bat_start=times_bat-dt_iso_bat
+        t_bat_end=times_bat+dt_iso_bat
+        df_swift['STMOC_bat_start']=t_bat_start
+        df_swift['STMOC_bat_stop']=t_bat_end
+
+        output_path='./STMOC/AA_df_swift_STMOC_trial.csv'
+        df_swift.to_csv(output_path, mode='a', header=not os.path.exists(output_path))
+
+        stmoc_bat = STMOC.from_spatial_coverages(t_bat_start, t_bat_end, df_swift['MOC'])
+        print("Time of the first observation: ", stmoc_bat.min_time.iso)
+        print("Time of the last observation: ", stmoc_bat.max_time.iso)
+
+        output_path='./STMOC/Swift_TrigID_'+str(TrigID)+'_STMOC.fits'
+        stmoc_bat.write(output_path,format='fits', overwrite=True)
+
+        #Stacked
+        #stacked_STMOC=STMOC.from_fits('./Swift_BAT_Alert/stacked_STMOC.fits')
+        #restacked_STMOC=stmoc_bat.union(stacked_STMOC)
+        #output_path='./Swift_BAT_Alert/stacked_STMOC.fits'
+        #restacked_STMOC.write(output_path,format='fits', overwrite=True)
+
+        if os.path.isfile('./STMOC/AA_stacked_STMOC.fits'):
+            print ("File does exist")
+            stacked_STMOC=STMOC.from_fits('./STMOC/AA_stacked_STMOC.fits')
+            restacked_STMOC=stmoc_bat.union(stacked_STMOC)
+            output_path='./STMOC/AA_stacked_STMOC.fits'
+            restacked_STMOC.write(output_path,format='fits', overwrite=True)
+        else:
+            print ("File does not exist")
+            output_path='./STMOC/AA_stacked_STMOC.fits'
+            stmoc_bat.write(output_path,format='fits')
+
         ###############
         #Figure 1
         ###############
@@ -238,45 +281,4 @@ class merged_def():
         return outdir
 
 
-    def Xmatched_to_obslist(observatory, crossmatched_cat_glade2, zenith, moon_sep, time_resolution, night, outdir):
-        ###############
-        #Event
-        ###############
-        crossmatched_cat_glade2=crossmatched_cat_glade2
-        print('########################')
-        print('########################')
-        print(crossmatched_cat_glade2)
-        print('########################')
-        print('########################')
-        print('This is zenith:'+str(zenith))
-        print('This is time_resolution:'+str(time_resolution))
-        crossmatched_cat_glade2=crossmatched_cat_glade2.sort_values(by='Bmag', ascending=False)
-        crossmatched_cat_glade2=crossmatched_cat_glade2.head(10)
-        ###############
-        #Observability
-        ###############
-        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_swift.merged_def2.doit(observatory, crossmatched_cat_glade2, zenith, moon_sep, night, time_resolution, outdir)
-        ###############
-        #Pandas
-        ###############
-        listed_obs=[]
-        for i in range(0, len(c_fin)):
-            dict = {'RA': crossmatched_cat_glade2.RA.values[i],
-            'DEC': crossmatched_cat_glade2.DEC.values[i],
-            'dist': crossmatched_cat_glade2.dist.values[i],
-            'Bmag': crossmatched_cat_glade2.Bmag.values[i],
-            'HyperLEDA': crossmatched_cat_glade2.HyperLEDA.values[i],
-            'Observable': [item for item in c_fin[i]],
-            'Observing Night': [t.datetime.strftime("%D") for t in time_grid],
-            'Observatory': observatory,
-            'Timeslot':[t.datetime.strftime("%H:%M") for t in time_grid],
-            'Airmass': airmass,
-            'Altitude': altitude,
-            'Zenith': zenith}
-            observability_df=pd.DataFrame(dict, index = [item for item in c_fin[i]])
-            listed_obs.append(observability_df)
-        listed_obs=pd.concat(listed_obs)
-        fin_df=listed_obs.loc[True]
-        outname = 'Observability_@'+str(observatory)+'.csv'
-        fullname = os.path.join(outdir, outname)    
-        fin_df.to_csv(fullname, sep="\t", index = False, header=True)
+

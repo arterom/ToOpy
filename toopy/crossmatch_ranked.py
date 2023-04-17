@@ -16,7 +16,10 @@ from library import fermipy_methods_cascade
 from library import fermipy_methods_track
 
 from library import xmatch_GBM
+from library import stmoc_GBM
+
 from library import xmatch_Swift
+from library import stmoc_Swift
 
 from library import xmatch_GW
 from library import tiled_GW
@@ -125,7 +128,7 @@ parser.add_argument("-ranking_method", "--ranking_method",
                     help="ranking methodology",
                     required=False,
                     default=False,
-                    choices=['Xmatch', 'tiled_GW','VarInd', 'FoV_prob', 'fermipy', 'etc'])
+                    choices=['Xmatch', 'tiled_GW', 'STMOC', 'VarInd', 'FoV_prob', 'fermipy', 'etc'])
 ######################################################################################
 ######################################################################################
 # TRACK & GW
@@ -173,9 +176,17 @@ if args.flavour == 'BAT':
             os.makedirs(outdir, exist_ok=True)
         crossmatched_cat_glade2, outdir=xmatch_Swift.merged_def.do_Xmatch(args.time_res, args.catalog, args.ra, args.dec, args.error, args.obs_night, args.TransNum_TrigID)
         outdir = xmatch_Swift.merged_def.Xmatched_raw_to_3Dplot(crossmatched_cat_glade2, outdir)
-        #xmatch_Swift.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat_glade2, args.zenith, args.moon_separation, args.time_res, args.obs_night, outdir)
+        xmatch_Swift.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat_glade2, args.zenith, args.moon_separation, args.time_res, args.obs_night, outdir)
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
 
+    if args.ranking_method == 'STMOC':
+        outdir = './Swift_BAT_Alert/Xmatch'
+        if not os.path.exists(outdir):
+            os.makedirs(outdir, exist_ok=True)
+        crossmatched_cat_glade2, outdir=stmoc_Swift.merged_def.do_Xmatch(args.time_res, args.catalog, args.ra, args.dec, args.error, args.obs_night, args.TransNum_TrigID)
+        outdir = stmoc_Swift.merged_def.Xmatched_raw_to_3Dplot(crossmatched_cat_glade2, outdir)
+        #xmatch_Swift.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat_glade2, args.zenith, args.moon_separation, args.time_res, args.obs_night, outdir)
+        print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
         os.chdir(str(base_dir))
         argument_list=['test_arg']
         separator = " "
@@ -199,9 +210,18 @@ if args.flavour == 'GBM':
         crossmatched_glade2_cat, hdul1, outdir=xmatch_GBM.merged_def.do_Xmatch(args.url, args.TransNum_TrigID, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
         outdir = xmatch_GBM.merged_def.Xmatched_raw_to_3Dplot_glade2(crossmatched_glade2_cat, hdul1, outdir)
         print('Done with xmatchGLade2 '+'Total Run-time is: '+str(time.time() - start_argparse))
-        #xmatch_GBM.merged_def.Xmatched_top10_BMag_to_obslist_glade2(args.url, args.observatory, crossmatched_glade2_cat, args.zenith, args.moon_separation, hdul1, args.time_res, outdir)
+        xmatch_GBM.merged_def.Xmatched_top10_BMag_to_obslist_glade2(args.url, args.observatory, crossmatched_glade2_cat, args.zenith, args.moon_separation, hdul1, args.time_res, outdir)
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
 
+    if args.ranking_method == 'STMOC':
+        outdir = './GBM_Alert/Xmatch'
+        if not os.path.exists(outdir):
+            os.makedirs(outdir, exist_ok=True)
+        crossmatched_glade2_cat, hdul1, outdir=stmoc_GBM.merged_def.do_Xmatch(args.url, args.TransNum_TrigID, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
+        outdir = stmoc_GBM.merged_def.Xmatched_raw_to_3Dplot_glade2(crossmatched_glade2_cat, hdul1, outdir)
+        print('Done with xmatchGLade2 '+'Total Run-time is: '+str(time.time() - start_argparse))
+        #xmatch_GBM.merged_def.Xmatched_top10_BMag_to_obslist_glade2(args.url, args.observatory, crossmatched_glade2_cat, args.zenith, args.moon_separation, hdul1, args.time_res, outdir)
+        print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
         os.chdir(str(base_dir))
         argument_list=['test_arg']
         separator = " "
