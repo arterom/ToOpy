@@ -36,7 +36,7 @@ class App(customtkinter.CTk):
 
 
 
-        image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "./GUI_images")
+        image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "./documentation_images")
         self.large_test_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "ToOpy.png")), size=(700, 300))
         self.home_frame_large_image_label = customtkinter.CTkLabel(self, text="", image=self.large_test_image)
         self.home_frame_large_image_label.grid(row=2, column=0, padx=(20, 0), pady=(20, 0), sticky="nsew")
@@ -120,7 +120,7 @@ class App(customtkinter.CTk):
         subprocess.check_call('chmod u+r+x initalize_Reference_GW_A.sh', shell=True)
         subprocess.check_call('./initalize_Reference_GW_A.sh', shell=True)
         print('at the end')
-        image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "./GUI_images")
+        image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "./documentation_images")
         self.large_test_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "ToOpy.png")), size=(1000, 300))
         self.home_frame_large_image_label = customtkinter.CTkLabel(self, text="", image=self.large_test_image)
         self.home_frame_large_image_label.grid(row=2, column=0, padx=(20, 0), pady=(20, 0), sticky="nsew")
@@ -128,7 +128,7 @@ class App(customtkinter.CTk):
     def initalize_Reference_IC170922A_ROI(self):
         subprocess.check_call('chmod u+r+x initalize_Reference_IC170922A_ROI.sh', shell=True)
         subprocess.check_call('./initalize_Reference_IC170922A_ROI.sh', shell=True)
-        image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "./GUI_images")
+        image_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "./documentation_images")
         self.large_test_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "track.png")), size=(1000, 300))
         self.home_frame_large_image_label = customtkinter.CTkLabel(self, text="", image=self.large_test_image)
         self.home_frame_large_image_label.grid(row=2, column=0, padx=(20, 0), pady=(20, 0), sticky="nsew")
