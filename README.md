@@ -19,14 +19,12 @@ $ `conda activate toopy`
 
 $ `python setup.py install` ## installing fermipy package
 
+$ `cd ../ToOpy/toopy`
+
 # -------------------------
 # -------------------------
 
 ## Testing Guide with GUI (Beginner)
-
-$ `cd ../ToOpy/toopy`
-
-$ `conda activate toopy`
 
 $ `python tab_GUI.py`
 
@@ -36,11 +34,6 @@ $ `python tab_GUI.py`
 # -------------------------
 
 ## Testing Guide with .sh scripts (Advanced)
-
-
-$ `cd ../toopy`
-
-$ `conda activate toopy`
 
 ### Option 1; Testing pipeline with test alerts from ".xml" files
 Step 1: Modifiy "toopy_gcn_listener_main.py"
