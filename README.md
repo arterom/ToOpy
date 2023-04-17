@@ -1,7 +1,6 @@
 # ToOpy
 The algorithm is aimed at combining the functionality of a data Broker and observation Scheduler. The Broker intercepts alert notices that are injected into the Gamma Coordination Network (GCN) stream by a range of observatories (IceCube, LVC, Swift-BAT and Fermi-GBM) and enrich therein content with additional information from galaxy catalogs as well as contemporaneous satelite-data products, e.g. Swift-BAT, Fermi-LAT & Fermi-GBM coverage. Once promising astrophysical objects and/or sky regions are ranked in order of priority, the Broker provides the Scheduler with a list of galaxies or sky tiles, that based on user preferences are converted into pointing sequences for automatised Target of Opportunity (ToO) observations.
 # -------------------------
-# -------------------------
 ## Setting up the environment
 Setting up conda environment with the right dependencies:
 
