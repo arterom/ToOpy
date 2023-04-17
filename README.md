@@ -19,12 +19,13 @@ $ `conda activate toopy`
 
 $ `python setup.py install` ## installing fermipy package
 
-$ `cd ../ToOpy/toopy`
 
 # -------------------------
 # -------------------------
 
 ## Testing Guide with GUI (Beginner)
+
+$ `cd ../ToOpy/toopy`
 
 $ `python tab_GUI.py`
 
