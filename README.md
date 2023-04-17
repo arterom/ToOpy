@@ -30,7 +30,7 @@ $ `conda activate toopy`
 
 $ `python tab_GUI.py`
 
-![Model](https://github.com/arterom/ToOpy/blob/2e18eee48d0d96852d562e94b5c9fea71bd0bbaf/toopy/GUI_images/experimental_GUI.png)
+![Model](https://github.com/arterom/ToOpy/blob/2e18eee48d0d96852d562e94b5c9fea71bd0bbaf/toopy/documentation_images/experimental_GUI.png)
 
 # -------------------------
 # -------------------------
