@@ -25,7 +25,7 @@ $ `python setup.py install`
 
 $ `cd ../ToOpy/toopy`
 
-$ `python tab_GUI.py`
+$ `python testing_GUI.py`
 
 ![Model](toopy/documentation_images/experimental_GUI.png)
 
