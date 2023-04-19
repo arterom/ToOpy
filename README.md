@@ -31,31 +31,10 @@ $ `python testing_GUI.py`
 
 # -------------------------
 
-## Testing Guide with .sh scripts (Advanced)
+## Testing Guide with ".sh" & ".xml" scripts (Advanced)
 
-### Option 1; Testing pipeline with test alerts from ".xml" files
-Step 1: Modifiy "toopy_gcn_listener_main.py"
 
--> Comment out 'gcn.listen(handler=handler)'
-
--> Uncomment/edit a Cascade alert
-
--> Uncomment the last two line
-
-```
-# Listen for VOEvents until killed with Control-C.
-#gcn.listen(handler=handler)
-
-# Templates for test alerts
-#payload = open('./xml_test_alerts/IceCube_CASCADE/2021/CASCADE_Dez21.xml', 'rb').read()
-
-root = lxml.etree.fromstring(payload)
-handler(payload, root)
-```
-
-Step 2: $ `python toopy_gcn_listener_main.py`
-
-### Option 2; Testing pipeline with test alerts from script.
+### Option 1; Testing pipeline with test alerts from script.
 Step 1: Edit "initalize_Reference_IC170922A_ROI.sh" according to user preferences:
 ```
 echo 'Give it a couple of seconds to wake up....;)'
@@ -77,6 +56,28 @@ python crossmatch_ranked.py \
 ```
 
 Step 2: $ `./initalize_Reference_IC170922A.sh`
+
+### Option 2; Testing pipeline with test alerts from ".xml" files
+Step 1: Modifiy "toopy_gcn_listener_main.py"
+
+-> Comment out 'gcn.listen(handler=handler)'
+
+-> Uncomment/edit a Cascade alert
+
+-> Uncomment the last two line
+
+```
+# Listen for VOEvents until killed with Control-C.
+#gcn.listen(handler=handler)
+
+# Templates for test alerts
+#payload = open('./xml_test_alerts/IceCube_CASCADE/2021/CASCADE_Dez21.xml', 'rb').read()
+
+root = lxml.etree.fromstring(payload)
+handler(payload, root)
+```
+
+Step 2: $ `python toopy_gcn_listener_main.py`
 
 # -------------------------
 
