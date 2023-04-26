@@ -16,17 +16,17 @@ class App(customtkinter.CTk):
 
         # configure window
         self.title("GUI for Reference Alerts.py")
-        self.geometry(f"{1000}x{1000}")
+        self.geometry(f"{900}x{1000}")
 
         # configure grid layout (4x4)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure((2, 3), weight=0)
         self.grid_rowconfigure((0, 1, 2), weight=1)
 
-        self.textbox = customtkinter.CTkTextbox(self, width=1000, height=200)
+        self.textbox = customtkinter.CTkTextbox(self, width=800, height=200)
         self.textbox.grid(row=0, column=0, padx=(20, 0), pady=(20, 0), sticky="nsew")
 
-        self.tabview = customtkinter.CTkTabview(self, width=1000)
+        self.tabview = customtkinter.CTkTabview(self, width=800)
         self.tabview.grid(row=1, column=0, padx=(20, 20), pady=(20, 0), sticky="nsew")
         #self.tabview = customtkinter.CTkLabel(master=self.tabview, text="ghjgjhgj Group:")
         self.tabview.add("GW Alert")
@@ -84,7 +84,7 @@ class App(customtkinter.CTk):
 
         self.textbox.insert("0.0","Experimental GUI in order to facilitate the use of ToOpy (for now works with reference alerts that are processed through .sh scripts)." "\n\n" + 
         	"How to use:\n" + "1). Select alert streams from the tabview below\n" + 
-        	"2). Process reference alerts from pre-defined '*.sh' scripts by pushing the corresponding buttons \n" + "3). Check updated output folders shown in the figure at the bottom (note that ToOpy might be still running (especially for Fermi-LAT analysis)")
+        	"2). Process reference alerts from pre-defined '*.sh' scripts by pushing the corresponding buttons \n" + "3). Check command-line feedback and corresponding output folders in your home directory (note that ToOpy might be still running)")
 
     def input_gw_event_GW_tilling(self):
         answer = askokcancel(
