@@ -284,7 +284,7 @@ class merged_def():
             print(pointing_list)
             pointing_list_pre = pointing_list.to_pandas()
 
-            crossmatched_cat=pd.concat([pointing_list_pre,df_crab])
+            crossmatched_cat=pd.concat([pointing_list_pre])#,df_crab])
             outname = 'tiling_list_90.csv'
             fullname = os.path.join(outdir, outname)    
             crossmatched_cat.to_csv(fullname, sep="\t", index = False, header=True)
