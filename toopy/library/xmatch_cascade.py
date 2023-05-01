@@ -267,12 +267,12 @@ class merged_def():
         plt.savefig(fullname)
         
         return crossmatched_cat, header, EVENTID, START,  outdir
-    def Xmatched_raw_to_obslist(crossmatched_cat, zenith, moon_sep, header, time_resolution, EVENTID, START, outdir):
+    def Xmatched_raw_to_obslist(crossmatched_cat, zenith, moon_sep, header, too_span, time_resolution, EVENTID, START, outdir):
         ###############
         #Event
         ###############
         crossmatched_cat=crossmatched_cat
-        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_cascade.merged_def2.doit(crossmatched_cat, zenith, moon_sep, header, time_resolution, outdir)
+        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_cascade.merged_def2.doit(crossmatched_cat, zenith, moon_sep, header, too_span, time_resolution, outdir)
         ###############
         #Pandas
         ###############
@@ -299,7 +299,7 @@ class merged_def():
         outname = 'Observability_listed.csv'
         fullname = os.path.join(outdir, outname)    
         fin_df.to_csv(fullname, sep="\t", index = False, header=True)
-    def Xmatched_top10_VarInd_to_obslist(event, observatory, crossmatched_cat, zenith, moon_sep, header,  time_resolution, EVENTID, START, outdir):
+    def Xmatched_top10_VarInd_to_obslist(event, observatory, crossmatched_cat, zenith, moon_sep, header, too_span,  time_resolution, EVENTID, START, outdir):
         ###############
         #Event
         ###############
@@ -323,7 +323,7 @@ class merged_def():
         ###############
         #Observability
         ###############
-        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_cascade.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, header, time_resolution, outdir)
+        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_cascade.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, header, too_span, time_resolution, outdir)
         ###############
         #Pandas
         ###############
