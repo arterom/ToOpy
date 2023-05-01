@@ -62,13 +62,13 @@ class merged_def():
         #    if not os.path.exists(outdir):
         #        os.mkdir(outdir)
         if rank == 'VarInd':
-            outdir = './Cascade_Alert/VarInd/'+str(too_span)+'ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
+            outdir = './Cascade_Alert/VarInd/'+str(too_span)+'_ToO_TRes'+str(t_res)+str('hrs')+'_trigger_'+str(out_directory_date)
             if not os.path.exists(outdir):
                 os.mkdir(outdir)
-        if rank == 'FoV_prob':
-            outdir = './Cascade_Alert/FoV_prob/'+str(too_span)+'ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
-            if not os.path.exists(outdir):
-                os.mkdir(outdir)
+        #if rank == 'FoV_prob':
+        #    outdir = './Cascade_Alert/FoV_prob/'+str(too_span)+' ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
+        #    if not os.path.exists(outdir):
+        #        os.mkdir(outdir)
         #outdir = './Ranking_Method='+str(rank)+'Time_res='+str(t_res)+str('hrs')+str(vol_percent*100)+str('%')+'Event_type='+str(I3TYPE)+str('_Date_')+str(out_directory_date)+str('_Volume_')
         #if not os.path.exists(outdir):
         #    os.mkdir(outdir)
