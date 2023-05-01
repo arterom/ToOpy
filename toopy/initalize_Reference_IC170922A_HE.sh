@@ -13,4 +13,5 @@ python crossmatch_ranked.py \
 -ranking_method 'fermipy' \
 -fermitools_refdata_path '/opt/anaconda3/envs/toopy/share/fermitools/refdata' \
 -Rev IC170922A \
--lightcurve 'no' &
+-lightcurve 'no' \
+-too_span 'daily' &

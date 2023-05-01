@@ -10,6 +10,7 @@ printf 'Arg 9 is: %s\n' "$9"
 printf 'Arg 10 is: %s\n' "${10}"
 printf 'Arg 11 is: %s\n' "${11}"
 printf 'Arg 12 is: %s\n' "${12}"
+printf 'Arg 13 is: %s\n' "${13}"
 printf 'Running Xmatch with method: %s\n' "$9"
 python crossmatch_ranked.py \
 -observatory "$1" \
@@ -25,4 +26,5 @@ python crossmatch_ranked.py \
 -ranking_method "$9" \
 -fermitools_refdata_path "${10}" \
 -Rev "${11}" \
--lightcurve "${12}" &
+-lightcurve "${12}" \
+-too_span "${13}" &

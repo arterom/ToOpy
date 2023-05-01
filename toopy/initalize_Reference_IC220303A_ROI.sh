@@ -13,4 +13,5 @@ python crossmatch_ranked.py \
 -ranking_method 'VarInd' \
 -fermitools_refdata_path '/opt/anaconda3/envs/toopy/share/fermitools/refdata' \
 -Rev IC220303A_1  \
--lightcurve 'no' &
+-lightcurve 'no' \
+-too_span 'daily' &

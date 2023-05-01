@@ -286,8 +286,12 @@ if args.flavour == 'Track':
         outdir = './Track_Alert/VarInd'
         if not os.path.exists(outdir):
             os.makedirs(outdir, exist_ok=True)
-        crossmatched_cat, outdir=xmatch_track.merged_def.do_Xmatch(args.time_res, args.catalog, args.ra, args.dec, args.error, args.obs_night, args.Rev)
-        xmatch_track.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat, args.zenith, args.moon_separation, args.obs_night, args.time_res, outdir)
+        start_xmatch = time.time()
+        crossmatched_cat, outdir=xmatch_track.merged_def.do_Xmatch(args.too_span, args.time_res, args.catalog, args.ra, args.dec, args.error, args.obs_night, args.Rev)
+        print('Xmatch done and '+'Total Run-time is: '+str(time.time() - start_xmatch))
+        start_visibility = time.time()
+        xmatch_track.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat, args.zenith, args.moon_separation, args.obs_night, args.too_span, args.time_res, outdir)
+        print('Visibility done and '+'Total Run-time is: '+str(time.time() - start_visibility))
         print('######################################################################################')
         print('######################################################################################')
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))

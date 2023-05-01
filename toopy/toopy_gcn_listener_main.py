@@ -324,12 +324,12 @@ def handler(payload, root):
         dt_sod = TimeDelta(Event_SOD, format='sec')
         start_time_mjd_actual = start_time_mjd + dt_sod
     ######################################################################################
-        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(start_time_mjd_actual), 'VarInd', fermitools_refdata_path, str(Rev), 'no']
+        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(start_time_mjd_actual), 'VarInd', fermitools_refdata_path, str(Rev), 'no', too_span]
         separator = " "
         subprocess.check_call("./method_scripts/IceCube_TRACK.sh %s" % separator.join(argument_list), shell=True) 
     ######################################################################################
         if '0' in parameter['Rev']:
-            argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(Event_MJD), 'fermipy', fermitools_refdata_path, str(Rev), lightcurve]
+            argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(Event_MJD), 'fermipy', fermitools_refdata_path, str(Rev), lightcurve, too_span]
             separator = " "
             subprocess.check_call("./method_scripts/IceCube_TRACK.sh %s" % separator.join(argument_list), shell=True)         
         if '1' in parameter['Rev']:
@@ -391,12 +391,12 @@ def handler(payload, root):
         dt_sod = TimeDelta(Event_SOD, format='sec')
         start_time_mjd_actual = start_time_mjd + dt_sod
     ######################################################################################
-        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(start_time_mjd_actual), 'VarInd', fermitools_refdata_path, str(Rev), 'no']
+        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(start_time_mjd_actual), 'VarInd', fermitools_refdata_path, str(Rev), 'no', too_span]
         separator = " "
         subprocess.check_call("./method_scripts/IceCube_TRACK.sh %s" % separator.join(argument_list), shell=True) 
     ######################################################################################
         if '0' in parameter['Rev']:
-            argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(Event_MJD), 'fermipy', fermitools_refdata_path, str(Rev), lightcurve]
+            argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(Event_MJD), 'fermipy', fermitools_refdata_path, str(Rev), lightcurve, too_span]
             separator = " "
             subprocess.check_call("./method_scripts/IceCube_TRACK.sh %s" % separator.join(argument_list), shell=True)         
         if '1' in parameter['Rev']:

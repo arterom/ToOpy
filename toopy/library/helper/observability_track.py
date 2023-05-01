@@ -258,7 +258,7 @@ class merged_def2():
 
         # Output.
         return ax, airmass, timetoplot, altitude, zenith
-    def doit(observatory, crossmatched_cat, zenith, moon_sep, night, time_resolution, outdir):
+    def doit(observatory, crossmatched_cat, zenith, moon_sep, night, too_span, time_resolution, outdir):
         # Specify observer at Keck Observatory:
         loc_observatory = Observer.at_site(str(observatory))
 
@@ -283,8 +283,13 @@ class merged_def2():
         # Define range of times to observe between
         #header = dict(header)
         start_time=Time(night, format='mjd', scale='utc')
-        dt_24hr = TimeDelta(86400*2, format='sec')
-        end_time = start_time + dt_24hr
+        if too_span=='daily':
+            dt2 = TimeDelta(86400*1, format='sec')
+        if too_span=='weekly':
+            dt2 = TimeDelta(86400*7, format='sec')
+        if too_span=='monthly':
+            dt2 = TimeDelta(86400*30, format='sec')
+        end_time = start_time + dt2
         time_resolution = time_resolution * u.hour
         time_grid = time_grid_from_range([start_time, end_time],
                                          time_resolution=time_resolution)

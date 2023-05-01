@@ -27,13 +27,13 @@ from library.helper import observability_track
 ######################################################################################
 ######################################################################################
 class merged_def():
-    def do_Xmatch(t_res, catalog, ra, dec, err, night, rev):
+    def do_Xmatch(too_span, t_res, catalog, ra, dec, err, night, rev):
         ###############
         #Event
         ###############
         observing_night=Time(night, format='mjd', scale='utc').isot 
         print('Manual input of alert date: '+str(observing_night))
-        outdir = './Track_Alert/VarInd/TRes'+str(t_res)+str('hrs')+'_&_'+str(observing_night)+'_&_Revision_'+str(rev)
+        outdir = './Track_Alert/VarInd/'+str(too_span)+'_ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(observing_night)+'_&_Revision_'+str(rev)
         if not os.path.exists(outdir):
             os.mkdir(outdir)
         ###############
@@ -202,7 +202,7 @@ class merged_def():
         plt.savefig(fullname)
         return crossmatched_cat, outdir
 
-    def Xmatched_to_obslist(observatory, crossmatched_cat, zenith, moon_sep, time_resolution, night, outdir):
+    def Xmatched_to_obslist(observatory, crossmatched_cat, zenith, moon_sep, too_span, time_resolution, night, outdir):
         ###############
         #Event
         ###############
@@ -211,7 +211,7 @@ class merged_def():
         ###############
         #Observability
         ###############
-        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_track.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, time_resolution, night, outdir)
+        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_track.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, too_span, time_resolution, night, outdir)
         ###############
         #Pandas
         ###############
