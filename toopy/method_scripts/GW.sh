@@ -8,6 +8,7 @@ printf 'Arg 7 is: %s\n' "$7"
 printf 'Arg 8 is: %s\n' "$8"
 printf 'Arg 9 is: %s\n' "$9"
 printf 'Arg 10 is: %s\n' "${10}"
+printf 'Arg 11 is: %s\n' "${11}"
 printf 'Running Xmatch with method: %s\n' "$6"
 python crossmatch_ranked.py \
 -observatory "$1" \
@@ -22,4 +23,5 @@ python crossmatch_ranked.py \
 -GraceID "$7" \
 -Rev "$8" \
 -mode "$9" \
--instrument_FOV "${10}" &
+-instrument_FOV "${10}" \
+-too_span "${11}" &

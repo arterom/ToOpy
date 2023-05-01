@@ -253,17 +253,25 @@ if args.flavour == 'GW':
         outdir = './GW_Alert/Xmatch'
         if not os.path.exists(outdir):
             os.makedirs(outdir, exist_ok=True)
-        crossmatched_cat, hdul1, outdir=xmatch_GW.merged_def.do_Xmatch(args.url, args.GraceID, args.Rev, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
+        start_xmatch = time.time()
+        crossmatched_cat, hdul1, outdir=xmatch_GW.merged_def.do_Xmatch(args.url, args.GraceID, args.Rev, args.vol, args.ranking_method, args.too_span, args.time_res, args.zenith, args.catalog)
+        print('Xmatch done and '+'Total Run-time is: '+str(time.time() - start_xmatch))
         outdir = xmatch_GW.merged_def.Xmatched_raw_to_3Dplot(crossmatched_cat, hdul1, outdir)
-        xmatch_GW.merged_def.Xmatched_top10_BMag_to_obslist(args.url, args.observatory, crossmatched_cat, args.zenith, args.moon_separation, hdul1, args.time_res, outdir)
+        start_visibility = time.time()
+        xmatch_GW.merged_def.Xmatched_top10_BMag_to_obslist(args.url, args.observatory, crossmatched_cat, args.zenith, args.moon_separation, hdul1, args.too_span, args.time_res, outdir)
+        print('Visibility done and '+'Total Run-time is: '+str(time.time() - start_visibility))
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
 
     if args.ranking_method == 'tiled_GW':
         outdir = './GW_Alert/tiled_GW'
         if not os.path.exists(outdir):
             os.makedirs(outdir, exist_ok=True)
-        crossmatched_cat, hdul1, outdir=tiled_GW.merged_def.do_Xmatch(args.url, args.GraceID, args.Rev, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog, args.mode, args.instrument_FOV)
-        tiled_GW.merged_def.Xmatched_top10_tiling_to_obslist(args.url, args.observatory, crossmatched_cat, args.zenith, args.moon_separation, hdul1, args.time_res, args.mode, outdir)
+        start_xmatch = time.time()
+        crossmatched_cat, hdul1, outdir=tiled_GW.merged_def.do_Xmatch(args.url, args.GraceID, args.Rev, args.vol, args.ranking_method, args.too_span, args.time_res, args.zenith, args.catalog, args.mode, args.instrument_FOV)
+        print('Xmatch done and '+'Total Run-time is: '+str(time.time() - start_xmatch))
+        start_visibility = time.time()
+        tiled_GW.merged_def.Xmatched_top10_tiling_to_obslist(args.url, args.observatory, crossmatched_cat, args.zenith, args.moon_separation, hdul1, args.too_span, args.time_res, args.mode, outdir)
+        print('Visibility done and '+'Total Run-time is: '+str(time.time() - start_visibility))
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
 ######################################################################################
 ######################################################################################

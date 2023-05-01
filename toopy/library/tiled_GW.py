@@ -36,7 +36,7 @@ from library.helper import observability_gw_tiled
 ######################################################################################
 ######################################################################################
 class merged_def():
-    def do_Xmatch(event, graceid, rev, vol_percent, rank, t_res, zenith, catalog, mode, instrument_FOV):
+    def do_Xmatch(event, graceid, rev, vol_percent, rank, too_span, t_res, zenith, catalog, mode, instrument_FOV):
         ###############
         #Event
         ###############
@@ -72,7 +72,7 @@ class merged_def():
         #Rankings
         ###############
         if rank == 'tiled_GW':
-            outdir = './GW_Alert/tiled_GW/TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)+'_&_'+str(graceid)+'_&_Revision_'+str(rev)
+            outdir = './GW_Alert/tiled_GW/'+str(too_span)+'_ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)+'_&_'+str(graceid)+'_&_Revision_'+str(rev)
             if not os.path.exists(outdir):
                 os.mkdir(outdir)
         ##################################
@@ -289,11 +289,11 @@ class merged_def():
             fullname = os.path.join(outdir, outname)    
             crossmatched_cat.to_csv(fullname, sep="\t", index = False, header=True)
         return crossmatched_cat, hdul1, outdir
-    def Xmatched_top10_tiling_to_obslist(event, observatory, crossmatched_cat, zenith, moon_sep, hdul1, time_resolution, mode, outdir):
+    def Xmatched_top10_tiling_to_obslist(event, observatory, crossmatched_cat, zenith, moon_sep, hdul1, too_span, time_resolution, mode, outdir):
         ###############
         #Observability
         ###############
-        ax, airmass_l, timetoplot, altitude_l, zenith_fin_l, c_fin, time_grid=observability_gw_tiled.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, time_resolution, mode, outdir)
+        ax, airmass_l, timetoplot, altitude_l, zenith_fin_l, c_fin, time_grid=observability_gw_tiled.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, too_span, time_resolution, mode, outdir)
         print('######################################################################################')
         print('######################################################################################')
         print('############################Observability#############################################')

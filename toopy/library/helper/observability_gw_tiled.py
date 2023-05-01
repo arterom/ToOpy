@@ -257,7 +257,7 @@ class merged_def2():
         ax.figure.canvas.draw()
         # Output.
         return ax, airmass, timetoplot, altitude, zenith_fin
-    def doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, time_resolution, mode, outdir):
+    def doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, too_span, time_resolution, mode, outdir):
         # Specify observer at Keck Observatory:
         loc_observatory = Observer.at_site(str(observatory))
 
@@ -280,7 +280,12 @@ class merged_def2():
                         #zenith=90*u.deg-altitude
         # Define range of times to observe between
         start_time_object = Time(hdul1[1].header['DATE-OBS'], format='isot', scale='utc')
-        dt2 = TimeDelta(86400, format='sec')
+        if too_span=='daily':
+            dt2 = TimeDelta(86400*1, format='sec')
+        if too_span=='weekly':
+            dt2 = TimeDelta(86400*7, format='sec')
+        if too_span=='monthly':
+            dt2 = TimeDelta(86400*30, format='sec')
         stop_time_object = start_time_object + dt2
         start_time_object, stop_time_object
 

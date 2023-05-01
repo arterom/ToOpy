@@ -12,4 +12,5 @@ python crossmatch_ranked.py \
 -GraceID 'MS230117q' \
 -Rev '1' \
 -mode 'diagnostic' \
--instrument_FOV '25' &
+-instrument_FOV '25' \
+-too_span 'daily' &

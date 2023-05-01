@@ -35,7 +35,7 @@ from library.helper import observability_gw
 ######################################################################################
 ######################################################################################
 class merged_def():
-    def do_Xmatch(event, graceid, rev, vol_percent, rank, t_res, zenith, catalog):
+    def do_Xmatch(event, graceid, rev, vol_percent, rank,too_span, t_res, zenith, catalog):
         ###############
         #Event
         ###############
@@ -71,18 +71,9 @@ class merged_def():
         #Rankings
         ###############
         if rank == 'Xmatch':
-            outdir = './GW_Alert/Xmatch/TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)+'_&_'+str(graceid)+'_&_Revision_'+str(rev)
+            outdir = './GW_Alert/Xmatch/'+str(too_span)+'_ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)+'_&_'+str(graceid)+'_&_Revision_'+str(rev)
             if not os.path.exists(outdir):
                 os.mkdir(outdir)
-        if rank == 'VarInd':
-            outdir = './GW_Alert/VarInd/TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)+'_&_'+str(graceid)+'_&_Revision_'+str(rev)
-            if not os.path.exists(outdir):
-                os.mkdir(outdir)
-        if rank == 'FoV_prob':
-            outdir = './GW_Alert/FoV_prob/TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)+'_&_'+str(graceid)+'_&_Revision_'+str(rev)
-            if not os.path.exists(outdir):
-                os.mkdir(outdir)
-
         ###############
         #4FGL
         ###############
@@ -424,7 +415,7 @@ class merged_def():
                                 fullname = os.path.join(outdir, outname)    
                                 plt.savefig(fullname)'''
         return outdir
-    def Xmatched_top10_BMag_to_obslist(event, observatory, crossmatched_cat, zenith, moon_sep, hdul1, time_resolution, outdir):
+    def Xmatched_top10_BMag_to_obslist(event, observatory, crossmatched_cat, zenith, moon_sep, hdul1, too_span, time_resolution, outdir):
         ###############
         #Event
         ###############
@@ -448,7 +439,7 @@ class merged_def():
         ###############
         #Observability
         ###############
-        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_gw.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, time_resolution, outdir)
+        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_gw.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, too_span, time_resolution, outdir)
         ###############
         #Pandas
         ###############

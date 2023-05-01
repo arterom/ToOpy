@@ -263,7 +263,7 @@ def handler(payload, root):
         skymap_fits_url=url_tester(skymap_fits, 30, 1)
         print('######################################################################################')
         print('######################################################################################')
-        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), ranking, str(GraceID), str(Rev), mode, instrument_FOV]
+        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), ranking, str(GraceID), str(Rev), mode, instrument_FOV, too_span]
         separator = " "
         subprocess.check_call("./method_scripts/GW.sh %s" % separator.join(argument_list), shell=True)
     ######################################################################################
