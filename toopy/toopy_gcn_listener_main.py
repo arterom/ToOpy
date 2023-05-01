@@ -363,7 +363,6 @@ def handler(payload, root):
         Track_url=track_REV_tester(url, Rev, 30, 3)
         print('######################################################################################')
         print('######################################################################################')
-
         data = urlopen(Track_url).read()
         data=data.decode()
         text_file_webscrap = open('recieved_GCNs/IceCube/GCN_ICECUBE_ASTROTRACK_BRONZE_%s_webscrap.txt' % outname, 'w')
@@ -431,10 +430,6 @@ def handler(payload, root):
         argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), 'VarInd', fermitools_refdata_path, 'no']
         separator = " "
         subprocess.check_call("./method_scripts/IceCube_CASCADE.sh %s" % separator.join(argument_list), shell=True)
-    ######################################################################################
-        #argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), 'FoV_prob', fermitools_refdata_path]
-        #separator = " "
-        #subprocess.check_call("./method_scripts/IceCube_CASCADE.sh %s" % separator.join(argument_list), shell=True)
     ######################################################################################      
         argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), 'fermipy', fermitools_refdata_path, lightcurve]
         separator = " "
