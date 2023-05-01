@@ -6,6 +6,7 @@ printf 'Arg 5 is: %s\n' "$5"
 printf 'Arg 6 is: %s\n' "$6"
 printf 'Arg 7 is: %s\n' "$7"
 printf 'Arg 8 is: %s\n' "$8"
+printf 'Arg 9 is: %s\n' "$9"
 printf 'Running Xmatch with method: %s\n' "$6"
 python crossmatch_ranked.py \
 -observatory "$1" \

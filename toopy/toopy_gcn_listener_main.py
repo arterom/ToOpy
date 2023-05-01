@@ -428,11 +428,11 @@ def handler(payload, root):
         print('######################################################################################')
         print('######################################################################################')
     ######################################################################################
-        argument_list=[observatory, max_zenith, moon_separation, too_span, time_resolution, str(skymap_fits_url), 'VarInd', fermitools_refdata_path, 'no']
+        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), 'VarInd', fermitools_refdata_path, 'no', too_span]
         separator = " "
         subprocess.check_call("./method_scripts/IceCube_CASCADE.sh %s" % separator.join(argument_list), shell=True)
     ######################################################################################      
-        argument_list=[observatory, max_zenith, moon_separation, too_span, time_resolution, str(skymap_fits_url), 'fermipy', fermitools_refdata_path, lightcurve]
+        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), 'fermipy', fermitools_refdata_path, lightcurve, too_span]
         separator = " "
         subprocess.check_call("./method_scripts/IceCube_CASCADE.sh %s" % separator.join(argument_list), shell=True)
 
