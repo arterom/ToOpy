@@ -18,4 +18,5 @@ python crossmatch_ranked.py \
 -catalog 'IX/67/4fgldr3' \
 -ranking_method "$6" \
 -fermitools_refdata_path "$7" \
--lightcurve "$8" &
+-lightcurve "$8" \
+-too_span "$9" &

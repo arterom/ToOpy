@@ -257,7 +257,7 @@ class merged_def2():
         ax.figure.canvas.draw()
         # Output.
         return ax, airmass, timetoplot, altitude, zenith
-    def doit(observatory, crossmatched_cat, zenith, moon_sep, header, time_resolution, outdir):
+    def doit(observatory, crossmatched_cat, zenith, moon_sep, header, too_span, time_resolution, outdir):
         # Specify observer at Keck Observatory:
         loc_observatory = Observer.at_site(str(observatory))
 
@@ -286,7 +286,12 @@ class merged_def2():
         EVENTMJD = dict(header)['EVENTMJD']
         times_object = Time(EVENTMJD, format='mjd', scale='utc')
         start_time_object = Time(times_object.iso)
-        dt2 = TimeDelta(86400, format='sec')
+        if arg.too_span=='daily'
+            dt2 = TimeDelta(86400*1, format='sec')
+        if arg.too_span=='weekly'
+            dt2 = TimeDelta(86400*7, format='sec')
+        if arg.too_span=='monthly'
+            dt2 = TimeDelta(86400*30, format='sec')
         stop_time_object = start_time_object + dt2
         start_time_object, stop_time_object
 

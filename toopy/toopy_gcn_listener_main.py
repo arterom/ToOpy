@@ -24,9 +24,10 @@ from helper_gcnlistener.helper_functions import find_between_tags
 # General Constraints
 #############################################
 #############################################
-observatory='"Roque de los Muchachos"' #***
+observatory='"Roque de los Muchachos"' 
 max_zenith='50'
 moon_separation='30'
+too_span='daily' # scheduling time span to be performed for the trigger, i.e. daily, weekly or monthly.
 time_resolution='1' # time in hours per observing slot
 
 # Preferences for GW Alerts
@@ -427,11 +428,11 @@ def handler(payload, root):
         print('######################################################################################')
         print('######################################################################################')
     ######################################################################################
-        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), 'VarInd', fermitools_refdata_path, 'no']
+        argument_list=[observatory, max_zenith, moon_separation, too_span, time_resolution, str(skymap_fits_url), 'VarInd', fermitools_refdata_path, 'no']
         separator = " "
         subprocess.check_call("./method_scripts/IceCube_CASCADE.sh %s" % separator.join(argument_list), shell=True)
     ######################################################################################      
-        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits_url), 'fermipy', fermitools_refdata_path, lightcurve]
+        argument_list=[observatory, max_zenith, moon_separation, too_span, time_resolution, str(skymap_fits_url), 'fermipy', fermitools_refdata_path, lightcurve]
         separator = " "
         subprocess.check_call("./method_scripts/IceCube_CASCADE.sh %s" % separator.join(argument_list), shell=True)
 

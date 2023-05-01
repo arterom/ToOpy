@@ -37,7 +37,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 ######################################################################################
 ######################################################################################
 class merged_def():
-    def do_Xmatch(event, vol_percent, rank, t_res, zenith, catalog):
+    def do_Xmatch(event, vol_percent, rank, too_span,t_res, zenith, catalog):
         ###############
         #Event
         ###############
@@ -57,16 +57,16 @@ class merged_def():
         out_directory_date = header['START'][:11]
         I3TYPE = header['I3TYPE']
 
-        if rank == 'Xmatch':
-            outdir = './Cascade_Alert/Xmatch/TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
-            if not os.path.exists(outdir):
-                os.mkdir(outdir)
+        #if rank == 'Xmatch':
+        #    outdir = './Cascade_Alert/Xmatch/'+str(too_span)+'ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
+        #    if not os.path.exists(outdir):
+        #        os.mkdir(outdir)
         if rank == 'VarInd':
-            outdir = './Cascade_Alert/VarInd/TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
+            outdir = './Cascade_Alert/VarInd/'+str(too_span)+'ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
             if not os.path.exists(outdir):
                 os.mkdir(outdir)
         if rank == 'FoV_prob':
-            outdir = './Cascade_Alert/FoV_prob/TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
+            outdir = './Cascade_Alert/FoV_prob/'+str(too_span)+'ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
             if not os.path.exists(outdir):
                 os.mkdir(outdir)
         #outdir = './Ranking_Method='+str(rank)+'Time_res='+str(t_res)+str('hrs')+str(vol_percent*100)+str('%')+'Event_type='+str(I3TYPE)+str('_Date_')+str(out_directory_date)+str('_Volume_')

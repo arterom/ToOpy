@@ -54,6 +54,10 @@ parser.add_argument("-time_res", "--time_res",
                     type=float,
                     help="time resolution for observability",
                     required=True)
+parser.add_argument("-too_span", "--too_span",
+                    type=str,
+                    help="scheduling time span to be performed for the trigger",
+                    required=True)
 parser.add_argument("-flavour", "--flavour",
                     type=str,
                     help="Flavour of the Alert",
@@ -330,13 +334,13 @@ if args.flavour == 'Cascade':
             os.makedirs(outdir, exist_ok=True)
 ###############################################################
 ###############################################################
-    if args.ranking_method == 'Xmatch':
-        outdir = './Cascade_Alert/Xmatch'
-        if not os.path.exists(outdir):
-            os.makedirs(outdir, exist_ok=True)
-        crossmatched_cat, header, EVENTID, START, outdir=xmatch_cascade.merged_def.do_Xmatch(args.url, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
-        xmatch_cascade.merged_def.Xmatched_raw_to_obslist(crossmatched_cat, args.zenith, args.moon_separation, header, args.time_res, EVENTID, START, outdir)
-        print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
+    #if args.ranking_method == 'Xmatch':
+    #    outdir = './Cascade_Alert/Xmatch'
+    #    if not os.path.exists(outdir):
+    #        os.makedirs(outdir, exist_ok=True)
+    #    crossmatched_cat, header, EVENTID, START, outdir=xmatch_cascade.merged_def.do_Xmatch(args.url, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
+    #    xmatch_cascade.merged_def.Xmatched_raw_to_obslist(crossmatched_cat, args.zenith, args.moon_separation, header, args.time_res, EVENTID, START, outdir)
+    #    print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
 ###############################################################
 ###############################################################
     if args.ranking_method == 'VarInd':
@@ -344,10 +348,10 @@ if args.flavour == 'Cascade':
         if not os.path.exists(outdir):
             os.makedirs(outdir, exist_ok=True)
         start_xmatch = time.time()
-        crossmatched_cat, header, EVENTID, START, outdir=xmatch_cascade.merged_def.do_Xmatch(args.url, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
+        crossmatched_cat, header, EVENTID, START, outdir=xmatch_cascade.merged_def.do_Xmatch(args.url, args.vol, args.ranking_method, args.too_span, args.time_res, args.zenith, args.catalog)
         print('Xmatch done and '+'Total Run-time is: '+str(time.time() - start_xmatch))
         start_visibility = time.time()
-        xmatch_cascade.merged_def.Xmatched_top10_VarInd_to_obslist(args.url, args.observatory, crossmatched_cat, args.zenith, args.moon_separation, header, args.time_res, EVENTID, START, outdir)
+        xmatch_cascade.merged_def.Xmatched_top10_VarInd_to_obslist(args.url, args.observatory, crossmatched_cat, args.zenith, args.moon_separation, header, args.too_span, args.time_res, EVENTID, START, outdir)
         print('Visibility done and '+'Total Run-time is: '+str(time.time() - start_visibility))
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
 ###############################################################
