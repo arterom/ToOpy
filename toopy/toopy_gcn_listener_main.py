@@ -125,7 +125,7 @@ def handler(payload, root):
         dt_sod = TimeDelta(Event_SOD, format='sec')
         start_time_mjd_actual = start_time_mjd + dt_sod
     ######################################################################################
-        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(start_time_mjd_actual),  'Xmatch', str(TrigID)]
+        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skycoord_evt.ra), str(skycoord_evt.dec), str(EVT_ERROR90), str(start_time_mjd_actual),  'Xmatch', str(TrigID), too_span]
         separator = " "
         subprocess.check_call('chmod u+r+x ./method_scripts/SwiftBAT.sh', shell=True)
         subprocess.check_call("./method_scripts/SwiftBAT.sh %s" % separator.join(argument_list), shell=True)

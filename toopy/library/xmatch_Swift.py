@@ -31,7 +31,7 @@ from astropy.time import TimeDelta
 ######################################################################################
 ######################################################################################
 class merged_def():
-    def do_Xmatch(t_res, catalog, ra, dec, err, night, TrigID):
+    def do_Xmatch(too_span, t_res, catalog, ra, dec, err, night, TrigID):
         ###############
         #Event
         ###############
@@ -61,7 +61,7 @@ class merged_def():
         print('###############')
 
         print('Manual input of alert date: '+str(observing_night))
-        outdir = './Swift_BAT_Alert/Xmatch/TRes'+str(t_res)+str('hrs')+'_&_'+str(observing_night)+'_&_TrigID_'+str(TrigID)
+        outdir = './Swift_BAT_Alert/Xmatch/'+str(too_span)+'_ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(observing_night)+'_&_TrigID_'+str(TrigID)
         if not os.path.exists(outdir):
             os.mkdir(outdir)
 
@@ -238,7 +238,7 @@ class merged_def():
         return outdir
 
 
-    def Xmatched_to_obslist(observatory, crossmatched_cat_glade2, zenith, moon_sep, time_resolution, night, outdir):
+    def Xmatched_to_obslist(observatory, crossmatched_cat_glade2, zenith, moon_sep, too_span, time_resolution, night, outdir):
         ###############
         #Event
         ###############
@@ -255,7 +255,7 @@ class merged_def():
         ###############
         #Observability
         ###############
-        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_swift.merged_def2.doit(observatory, crossmatched_cat_glade2, zenith, moon_sep, night, time_resolution, outdir)
+        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_swift.merged_def2.doit(observatory, crossmatched_cat_glade2, zenith, moon_sep, night, too_span, time_resolution, outdir)
         ###############
         #Pandas
         ###############

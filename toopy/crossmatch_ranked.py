@@ -178,18 +178,22 @@ if args.flavour == 'BAT':
         outdir = './Swift_BAT_Alert/Xmatch'
         if not os.path.exists(outdir):
             os.makedirs(outdir, exist_ok=True)
-        crossmatched_cat_glade2, outdir=xmatch_Swift.merged_def.do_Xmatch(args.time_res, args.catalog, args.ra, args.dec, args.error, args.obs_night, args.TransNum_TrigID)
+        start_xmatch = time.time()
+        crossmatched_cat_glade2, outdir=xmatch_Swift.merged_def.do_Xmatch(args.too_span, args.time_res, args.catalog, args.ra, args.dec, args.error, args.obs_night, args.TransNum_TrigID)
+        print('Xmatch done and '+'Total Run-time is: '+str(time.time() - start_xmatch))
         outdir = xmatch_Swift.merged_def.Xmatched_raw_to_3Dplot(crossmatched_cat_glade2, outdir)
-        xmatch_Swift.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat_glade2, args.zenith, args.moon_separation, args.time_res, args.obs_night, outdir)
+        start_visibility = time.time()
+        xmatch_Swift.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat_glade2, args.zenith, args.moon_separation, args.too_span, args.time_res, args.obs_night, outdir)
+        print('Visibility done and '+'Total Run-time is: '+str(time.time() - start_visibility))
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
 
     if args.ranking_method == 'STMOC':
         outdir = './Swift_BAT_Alert/Xmatch'
         if not os.path.exists(outdir):
             os.makedirs(outdir, exist_ok=True)
-        crossmatched_cat_glade2, outdir=stmoc_Swift.merged_def.do_Xmatch(args.time_res, args.catalog, args.ra, args.dec, args.error, args.obs_night, args.TransNum_TrigID)
+        crossmatched_cat_glade2, outdir=stmoc_Swift.merged_def.do_Xmatch(args.too_span, args.time_res, args.catalog, args.ra, args.dec, args.error, args.obs_night, args.TransNum_TrigID)
         outdir = stmoc_Swift.merged_def.Xmatched_raw_to_3Dplot(crossmatched_cat_glade2, outdir)
-        #xmatch_Swift.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat_glade2, args.zenith, args.moon_separation, args.time_res, args.obs_night, outdir)
+        #xmatch_Swift.merged_def.Xmatched_to_obslist(args.observatory, crossmatched_cat_glade2, args.zenith, args.moon_separation, args.too_span, args.time_res, args.obs_night, outdir)
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
         os.chdir(str(base_dir))
         argument_list=['test_arg']

@@ -29,7 +29,7 @@ from astropy.time import TimeDelta
 ######################################################################################
 ######################################################################################
 class merged_def():
-    def do_Xmatch(t_res, catalog, ra, dec, err, night, TrigID):
+    def do_Xmatch(too_span, t_res, catalog, ra, dec, err, night, TrigID):
         ###############
         #Event
         ###############

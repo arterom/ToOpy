@@ -11,4 +11,5 @@ python crossmatch_ranked.py \
 -obs_night 59914.51831019 \
 -catalog 'IX/67/4fgldr3' \
 -ranking_method 'Xmatch' \
--TransNum_TrigID 1142847 &
+-TransNum_TrigID 1142847 \
+-too_span 'daily' &
