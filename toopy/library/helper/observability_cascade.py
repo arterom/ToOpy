@@ -286,11 +286,11 @@ class merged_def2():
         EVENTMJD = dict(header)['EVENTMJD']
         times_object = Time(EVENTMJD, format='mjd', scale='utc')
         start_time_object = Time(times_object.iso)
-        if too_span=='daily'
+        if too_span=='daily':
             dt2 = TimeDelta(86400*1, format='sec')
-        if too_span=='weekly'
+        if too_span=='weekly':
             dt2 = TimeDelta(86400*7, format='sec')
-        if too_span=='monthly'
+        if too_span=='monthly':
             dt2 = TimeDelta(86400*30, format='sec')
         stop_time_object = start_time_object + dt2
         start_time_object, stop_time_object
