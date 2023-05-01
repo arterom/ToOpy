@@ -211,20 +211,23 @@ if args.flavour == 'GBM':
         outdir = './GBM_Alert/Xmatch'
         if not os.path.exists(outdir):
             os.makedirs(outdir, exist_ok=True)
-        crossmatched_glade2_cat, hdul1, outdir=xmatch_GBM.merged_def.do_Xmatch(args.url, args.TransNum_TrigID, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
+        start_xmatch = time.time()
+        crossmatched_glade2_cat, hdul1, outdir=xmatch_GBM.merged_def.do_Xmatch(args.url, args.TransNum_TrigID, args.vol, args.ranking_method, args.too_span, args.time_res, args.zenith, args.catalog)
+        print('Xmatch done and '+'Total Run-time is: '+str(time.time() - start_xmatch))
         outdir = xmatch_GBM.merged_def.Xmatched_raw_to_3Dplot_glade2(crossmatched_glade2_cat, hdul1, outdir)
+        start_visibility = time.time()
         print('Done with xmatchGLade2 '+'Total Run-time is: '+str(time.time() - start_argparse))
-        xmatch_GBM.merged_def.Xmatched_top10_BMag_to_obslist_glade2(args.url, args.observatory, crossmatched_glade2_cat, args.zenith, args.moon_separation, hdul1, args.time_res, outdir)
+        xmatch_GBM.merged_def.Xmatched_top10_BMag_to_obslist_glade2(args.url, args.observatory, crossmatched_glade2_cat, args.zenith, args.moon_separation, hdul1, args.too_span, args.time_res, outdir)
+        print('Visibility done and '+'Total Run-time is: '+str(time.time() - start_visibility))
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
-
     if args.ranking_method == 'STMOC':
         outdir = './GBM_Alert/Xmatch'
         if not os.path.exists(outdir):
             os.makedirs(outdir, exist_ok=True)
-        crossmatched_glade2_cat, hdul1, outdir=stmoc_GBM.merged_def.do_Xmatch(args.url, args.TransNum_TrigID, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
+        crossmatched_glade2_cat, hdul1, outdir=stmoc_GBM.merged_def.do_Xmatch(args.url, args.TransNum_TrigID, args.vol, args.ranking_method, args.too_span, args.time_res, args.zenith, args.catalog)
         outdir = stmoc_GBM.merged_def.Xmatched_raw_to_3Dplot_glade2(crossmatched_glade2_cat, hdul1, outdir)
         print('Done with xmatchGLade2 '+'Total Run-time is: '+str(time.time() - start_argparse))
-        #xmatch_GBM.merged_def.Xmatched_top10_BMag_to_obslist_glade2(args.url, args.observatory, crossmatched_glade2_cat, args.zenith, args.moon_separation, hdul1, args.time_res, outdir)
+        #xmatch_GBM.merged_def.Xmatched_top10_BMag_to_obslist_glade2(args.url, args.observatory, crossmatched_glade2_cat, args.zenith, args.moon_separation, hdul1, args.too_span, args.time_res, outdir)
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
         os.chdir(str(base_dir))
         argument_list=['test_arg']

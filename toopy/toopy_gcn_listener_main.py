@@ -205,7 +205,7 @@ def handler(payload, root):
         skymap_fits=url_tester(LocationMap_URL, 3, 5)
         print('######################################################################################')
         print('######################################################################################')
-        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits), 'Xmatch', str(TrigID)+'_FinalPosition']
+        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits), 'Xmatch', str(TrigID)+'_FinalPosition', too_span]
         separator = " "
         subprocess.check_call("./method_scripts/FermiGBM.sh %s" % separator.join(argument_list), shell=True)
     ######################################################################################
@@ -233,7 +233,7 @@ def handler(payload, root):
         skymap_fits=url_tester(HealPix_URL, 20, 3)
         print('######################################################################################')
         print('######################################################################################')
-        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits), 'Xmatch', str(Trans_Num)+'_SubTreshold']
+        argument_list=[observatory, max_zenith, moon_separation, time_resolution, str(skymap_fits), 'Xmatch', str(Trans_Num)+'_SubTreshold', too_span]
         separator = " "
         subprocess.check_call("./method_scripts/FermiGBM.sh %s" % separator.join(argument_list), shell=True)
     ######################################################################################

@@ -34,7 +34,7 @@ from astroquery.vizier import VizierClass
 ######################################################################################
 ######################################################################################
 class merged_def():
-    def do_Xmatch(event, trans_Num, vol_percent, rank, t_res, zenith, catalog):
+    def do_Xmatch(event, trans_Num, vol_percent, rank, too_span, t_res, zenith, catalog):
         ###############
         #Event
         ###############
@@ -76,7 +76,7 @@ class merged_def():
         #Rankings
         ###############
         #if rank == 'Xmatch':
-        outdir = './GBM_Alert/Xmatch/TRes'+str(t_res)+str('hrs')+'_&_'+str(START)+'_&_'+str(trans_Num)
+        outdir = './GBM_Alert/Xmatch/'+str(too_span)+'_ToO_TRes'+str(t_res)+str('hrs')+'_trigger_'+str(START)+'_&_'+str(trans_Num)
         if not os.path.exists(outdir):
             os.mkdir(outdir)
         ###############

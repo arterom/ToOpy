@@ -36,7 +36,7 @@ from library.helper import observability_gbm_gladePlus
 ######################################################################################
 ######################################################################################
 class merged_def():
-    def do_Xmatch(event, trans_Num, vol_percent, rank, t_res, zenith, catalog):
+    def do_Xmatch(event, trans_Num, vol_percent, rank, too_span, t_res, zenith, catalog):
         ###############
         #Event
         ###############
@@ -78,7 +78,7 @@ class merged_def():
         #Rankings
         ###############
         if rank == 'Xmatch':
-            outdir = './GBM_Alert/Xmatch/TRes'+str(t_res)+str('hrs')+'_&_'+str(START)+'_&_'+str(trans_Num)
+            outdir = './GBM_Alert/Xmatch/'+str(too_span)+'_ToO_TRes'+str(t_res)+str('hrs')+'_trigger_'+str(START)+'_&_'+str(trans_Num)
             if not os.path.exists(outdir):
                 os.mkdir(outdir)
         ###############
@@ -247,7 +247,7 @@ class merged_def():
         return outdir
 
    
-    def Xmatched_top10_BMag_to_obslist_glade2(event, observatory, crossmatched_cat, zenith, moon_sep, hdul1, time_resolution, outdir):
+    def Xmatched_top10_BMag_to_obslist_glade2(event, observatory, crossmatched_cat, zenith, moon_sep, hdul1, too_span, time_resolution, outdir):
         ###############
         #Event
         ###############
@@ -261,7 +261,7 @@ class merged_def():
         ###############
         #Observability
         ###############
-        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_gbm.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, time_resolution, outdir)
+        ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_gbm.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, too_span, time_resolution, outdir)
         ###############
         #Pandas
         ###############
@@ -287,3 +287,5 @@ class merged_def():
         outname = 'Glade2_Observability_@'+str(observatory)+'.csv'
         fullname = os.path.join(outdir, outname)    
         fin_df.to_csv(fullname, sep="\t", index = False, header=True)
+
+        

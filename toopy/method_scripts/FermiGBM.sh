@@ -5,6 +5,7 @@ printf 'Arg 4 is: %s\n' "$4"
 printf 'Arg 5 is: %s\n' "$5"
 printf 'Arg 6 is: %s\n' "$6"
 printf 'Arg 7 is: %s\n' "$7"
+printf 'Arg 8 is: %s\n' "$8"
 printf 'Running Xmatch with method: %s\n' "$6"
 python crossmatch_ranked.py \
 -observatory "$1" \
@@ -16,4 +17,5 @@ python crossmatch_ranked.py \
 -url "$5" \
 -catalog 'IX/67/4fgldr3' \
 -ranking_method "$6" \
--TransNum_TrigID "$7" &
+-TransNum_TrigID "$7" \
+-too_span "$8" &
