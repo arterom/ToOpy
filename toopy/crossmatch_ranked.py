@@ -57,7 +57,7 @@ parser.add_argument("-time_res", "--time_res",
 parser.add_argument("-too_span", "--too_span",
                     type=str,
                     help="scheduling time span to be performed for the trigger",
-                    required=True)
+                    required=False)
 parser.add_argument("-flavour", "--flavour",
                     type=str,
                     help="Flavour of the Alert",
