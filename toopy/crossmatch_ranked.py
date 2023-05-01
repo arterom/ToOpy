@@ -128,7 +128,7 @@ parser.add_argument("-ranking_method", "--ranking_method",
                     help="ranking methodology",
                     required=False,
                     default=False,
-                    choices=['Xmatch', 'tiled_GW', 'STMOC', 'VarInd', 'FoV_prob', 'fermipy', 'etc'])
+                    choices=['Xmatch', 'tiled_GW', 'STMOC', 'VarInd', 'fermipy', 'etc'])
 ######################################################################################
 ######################################################################################
 # TRACK & GW
@@ -343,18 +343,13 @@ if args.flavour == 'Cascade':
         outdir = './Cascade_Alert/VarInd'
         if not os.path.exists(outdir):
             os.makedirs(outdir, exist_ok=True)
+        start_xmatch = time.time()
         crossmatched_cat, header, EVENTID, START, outdir=xmatch_cascade.merged_def.do_Xmatch(args.url, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
+        print('Xmatch done and '+'Total Run-time is: '+str(time.time() - start_xmatch))
+        start_visibility = time.time()
         xmatch_cascade.merged_def.Xmatched_top10_VarInd_to_obslist(args.url, args.observatory, crossmatched_cat, args.zenith, args.moon_separation, header, args.time_res, EVENTID, START, outdir)
-        print('VarInd done and '+'Total Run-time is: '+str(time.time() - start_argparse))
-###############################################################
-###############################################################
-    if args.ranking_method == 'FoV_prob':
-        outdir = './Cascade_Alert/FoV_prob'
-        if not os.path.exists(outdir):
-            os.makedirs(outdir, exist_ok=True)
-        crossmatched_cat, header, EVENTID, START, outdir=xmatch_cascade.merged_def.do_Xmatch(args.url, args.vol, args.ranking_method, args.time_res, args.zenith, args.catalog)
-        xmatch_cascade.merged_def.Xmatched_top10_FoV_to_obslist(args.url, args.observatory, crossmatched_cat, args.zenith, args.moon_separation, header, args.time_res, EVENTID, START, outdir)
-        print('FoV_prob done and '+'Total Run-time is: '+str(time.time() - start_argparse))
+        print('Visibility done and '+'Total Run-time is: '+str(time.time() - start_visibility))
+        print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
 ###############################################################
 ###############################################################
     if args.ranking_method == 'fermipy':
