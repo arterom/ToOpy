@@ -293,6 +293,7 @@ class merged_def():
         ###############
         #Observability
         ###############
+        crossmatched_cat=crossmatched_cat.head(10)
         start_vis = time.time()
         ax, airmass_l, timetoplot, altitude_l, zenith_fin_l, c_fin, time_grid=observability_gw_tiled.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, too_span, time_resolution, mode, outdir)
         print('######################################################################################')
