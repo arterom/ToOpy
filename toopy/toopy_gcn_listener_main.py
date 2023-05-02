@@ -33,7 +33,7 @@ time_resolution='1' # time in hours per observing slot
 # Preferences for GW Alerts
 #############################################
 #############################################
-instrument_FOV='15.5'
+instrument_FOV='3.5'
 ranking='tiled_GW' # tiled_GW or Xmatch
 mode='diagnostic' # diagnostic or performance
 
