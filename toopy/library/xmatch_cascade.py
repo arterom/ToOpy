@@ -318,6 +318,7 @@ class merged_def():
         ###############
         #Event
         ###############
+        start_vis = time.time()
         filename = download_file(event, cache=True)
         skymap_event, header = hp.read_map(filename, h=True, verbose=False)
         def circ_prob(ra, dec, radius):
@@ -364,6 +365,9 @@ class merged_def():
             observability_df=pd.DataFrame(dict, index = [item for item in c_fin[i]])
             listed_obs.append(observability_df)
         listed_obs=pd.concat(listed_obs)
+        print('######################################################################################')
+        print('vis done and '+'Total Run-time is: '+str(time.time() - start_vis))
+        print('######################################################################################')
         fin_df=listed_obs.loc[True]
         outname = 'Observability_@'+str(observatory)+'.csv'
         fullname = os.path.join(outdir, outname)    
