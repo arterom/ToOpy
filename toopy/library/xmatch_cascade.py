@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import math
 import os
+import time
 #astropy
 import astropy.units as u
 from astropy.time import Time
@@ -31,6 +32,7 @@ from library.helper import helper_NED_query
 ######################################################################################
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
+
 ######################################################################################
 ######################################################################################
 # Functions
@@ -41,6 +43,7 @@ class merged_def():
         ###############
         #Event
         ###############
+        start_download = time.time()
         filename = download_file(event, cache=True, allow_insecure=True)
         skymap_event, header = hp.read_map(filename, h=True, verbose=False)
         quantile = vol_percent # to get 50% contour
@@ -56,6 +59,8 @@ class merged_def():
         EVENTMJD = header['EVENTMJD']
         out_directory_date = header['START'][:11]
         I3TYPE = header['I3TYPE']
+        print('download done and '+'Total Run-time is: '+str(time.time() - start_download))
+        start_moc = time.time()
 
         #if rank == 'Xmatch':
         #    outdir = './Cascade_Alert/Xmatch/'+str(too_span)+'ToO_TRes'+str(t_res)+str('hrs')+'_&_'+str(out_directory_date)
@@ -86,6 +91,9 @@ class merged_def():
         ra_Cascade_evt = np.rad2deg(phi)
         dec_Cascade_evt = np.rad2deg(0.5 * np.pi - theta)
         skycoord_Cascade_evt = SkyCoord(ra_Cascade_evt, dec_Cascade_evt, unit="deg", frame="icrs")
+        moc_Cascade_evt = MOC.from_skycoords(skycoord_Cascade_evt, max_norder=7)
+        print('moc done and '+'Total Run-time is: '+str(time.time() - start_moc))
+        start_moc_cat = time.time()
         '''
         #MAGIC exposure
         exposure = hpt.exposure_pdf(64, a0=28.761944, zmax=zenith)
@@ -137,9 +145,11 @@ class merged_def():
         crossmatched_cat=pd.DataFrame.from_dict(dict_xmatch)
         '''
         # Without MAGIC_exposure, still fails
-        moc_Cascade_evt = MOC.from_skycoords(skycoord_Cascade_evt, max_norder=7)
+        
         #moc_Mexp = MOC.from_skycoords(skycoord_Mexp, max_norder=6)
         moc_4FGL = MOC.from_lonlat(cat_4FGL['_RAJ2000'].T * u.deg, cat_4FGL['_DEJ2000'].T * u.deg, max_norder=7)
+        print('moc cat done and '+'Total Run-time is: '+str(time.time() - start_moc_cat))
+        start_moc_xm = time.time()
         ###############
         #XMatch
         ###############
@@ -265,12 +275,14 @@ class merged_def():
         outname = 'FOV_ROI.pdf'
         fullname = os.path.join(outdir, outname)    
         plt.savefig(fullname)
+        print('xm done and '+'Total Run-time is: '+str(time.time() - start_moc_xm))
         
         return crossmatched_cat, header, EVENTID, START,  outdir
     def Xmatched_raw_to_obslist(crossmatched_cat, zenith, moon_sep, header, too_span, time_resolution, EVENTID, START, outdir):
         ###############
         #Event
         ###############
+        start_vis = time.time()
         crossmatched_cat=crossmatched_cat
         ax, airmass, timetoplot, altitude, zenith, c_fin, time_grid=observability_cascade.merged_def2.doit(crossmatched_cat, zenith, moon_sep, header, too_span, time_resolution, outdir)
         ###############
@@ -295,6 +307,9 @@ class merged_def():
             observability_df=pd.DataFrame(dict, index = [item for item in c_fin[i]])
             listed_obs.append(observability_df)
         listed_obs=pd.concat(listed_obs)
+        print('######################################################################################')
+        print('vis done and '+'Total Run-time is: '+str(time.time() - start_vis))
+        print('######################################################################################')
         fin_df=listed_obs.loc[True]
         outname = 'Observability_listed.csv'
         fullname = os.path.join(outdir, outname)    

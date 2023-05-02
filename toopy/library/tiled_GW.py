@@ -293,6 +293,7 @@ class merged_def():
         ###############
         #Observability
         ###############
+        start_vis = time.time()
         ax, airmass_l, timetoplot, altitude_l, zenith_fin_l, c_fin, time_grid=observability_gw_tiled.merged_def2.doit(observatory, crossmatched_cat, zenith, moon_sep, hdul1, too_span, time_resolution, mode, outdir)
         print('######################################################################################')
         print('######################################################################################')
@@ -325,6 +326,9 @@ class merged_def():
         print(listed_obs)
         print('This is zenith:'+str(zenith))
         print('This is time_resolution:'+str(time_resolution))
+        print('######################################################################################')
+        print('vis done and '+'Total Run-time is: '+str(time.time() - start_vis))
+        print('######################################################################################')
         fin_df=listed_obs.loc[True]
         outname = 'Observability_@ '+str(observatory)+'_TrueFlag.csv'
         fullname = os.path.join(outdir, outname)    

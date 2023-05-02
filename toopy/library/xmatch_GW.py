@@ -39,6 +39,7 @@ class merged_def():
         ###############
         #Event
         ###############
+        start_download = time.time()
         filename = download_file(event, cache=True)
         hdul1 = fits.open(event)
         hdul1.info()
@@ -67,6 +68,8 @@ class merged_def():
                'DATE_OBS': DATE_OBS}
         df_gw = pd.DataFrame(data=d_gw,index=[0])
         print(df_gw)
+        print('download done and '+'Total Run-time is: '+str(time.time() - start_download))
+        start_moc_cat = time.time()
         ###############
         #Rankings
         ###############
@@ -81,6 +84,8 @@ class merged_def():
         row_limit=-1, columns=[ '*', '_RAJ2000', '_DEJ2000'])
         cat_4FGL, = vizier.get_catalogs(catalog)
         moc_4FGL = MOC.from_lonlat(cat_4FGL['_RAJ2000'].T * u.deg, cat_4FGL['_DEJ2000'].T * u.deg, max_norder=7)
+        print('moc_cat done and '+'Total Run-time is: '+str(time.time() - start_moc_cat))
+        start_moc_evt = time.time()
         if ORDERING == 'NESTED':
             NSIDE = header['NSIDE']
             skymap_event, header = hp.read_map(filename, h=True, verbose=False)
@@ -106,7 +111,8 @@ class merged_def():
             moc_90_nside = MOC.from_skycoords(skycoord_evt, max_norder=7)
             df_gw['MOC']=moc_90_nside
 
-
+            print('moc_evt done and '+'Total Run-time is: '+str(time.time() - start_moc_evt))
+            start_stmoc_evt = time.time()
             ###############
             #STMOC
             ###############
@@ -150,6 +156,7 @@ class merged_def():
                 print ("File does not exist")
                 output_path='./GW_Alert/STMOC/AA_stacked_STMOC.fits'
                 stmoc_gw.write(output_path,format='fits')
+            print('stmoc_evt done and '+'Total Run-time is: '+str(time.time() - start_stmoc_evt))
             ###############
             #Figure NESTED
             ###############
@@ -184,6 +191,7 @@ class merged_def():
             fullname = os.path.join(outdir, outname)    
             crossmatched_cat.to_csv(fullname, sep="\t", index = False, header=True)
         if ORDERING == 'NUNIQ':
+            start_moc_evt = time.time()
             uniq=data['UNIQ']
             probdensity=data['PROBDENSITY']
             level, ipix = ah.uniq_to_level_ipix(uniq)
@@ -193,6 +201,8 @@ class merged_def():
             colors = ['blue', 'green', 'yellow', 'orange', 'red']
             moxses = [MOC.from_valued_healpix_cells(uniq, prob, cumul_to=c) for c in cumul_to]
             df_gw['MOC']=moxses[0]
+            print('moc_evt done and '+'Total Run-time is: '+str(time.time() - start_moc_evt))
+            start_stmoc_evt = time.time()
             ###############
             #STMOC
             ###############
@@ -236,6 +246,7 @@ class merged_def():
                 print ("File does not exist")
                 output_path='./GW_Alert/STMOC/AA_stacked_STMOC.fits'
                 stmoc_gw.write(output_path,format='fits')
+            print('stmoc_evt done and '+'Total Run-time is: '+str(time.time() - start_stmoc_evt))
             ###############
             #Figure NUNIQ
             ###############
@@ -419,6 +430,7 @@ class merged_def():
         ###############
         #Event
         ###############
+        start_vis = time.time()
         filename = download_file(event, cache=True)
         hdul1_n = fits.open(event)
         print(hdul1_n)
@@ -461,6 +473,9 @@ class merged_def():
             observability_df=pd.DataFrame(dict, index = [item for item in c_fin[i]])
             listed_obs.append(observability_df)
         listed_obs=pd.concat(listed_obs)
+        print('######################################################################################')
+        print('vis done and '+'Total Run-time is: '+str(time.time() - start_vis))
+        print('######################################################################################')
         fin_df=listed_obs.loc[True]
         outname = 'Observability_@'+str(observatory)+'.csv'
         fullname = os.path.join(outdir, outname)    
