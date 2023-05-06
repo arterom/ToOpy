@@ -120,7 +120,7 @@ class merged_def():
         output_path='./STMOC/AA_df_gbm_STMOC_trial.csv'
         df_gbm.to_csv(output_path, mode='a', header=not os.path.exists(output_path))
 
-        stmoc_gbm = STMOC.from_spatial_coverages(t_gbm_start, t_gbm_end, df_gbm['MOC_cone'])
+        stmoc_gbm = STMOC.from_spatial_coverages(t_gbm_start, t_gbm_end, df_gbm['MOC'])
         print("Time of the first observation: ", stmoc_gbm.min_time.iso)
         print("Time of the last observation: ", stmoc_gbm.max_time.iso)
 

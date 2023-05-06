@@ -7,7 +7,7 @@ python crossmatch_ranked.py \
 -flavour BAT \
 -ra 266.933 \
 -dec '-68.260' \
--error 3 \
+-error 0.1 \
 -obs_night 59914.51831019 \
 -catalog 'IX/67/4fgldr3' \
 -ranking_method 'STMOC' \
