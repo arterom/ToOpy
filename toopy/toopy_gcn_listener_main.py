@@ -34,7 +34,7 @@ time_resolution='1' # time in hours per observing slot
 #############################################
 #############################################
 instrument_FOV='3.5'
-ranking='tiled_GW' # tiled_GW or Xmatch
+ranking='tiled_GW' # tiled_GW or Xmatch or STMOC
 mode='diagnostic' # diagnostic or performance
 
 # Preferences for IceCube Alerts

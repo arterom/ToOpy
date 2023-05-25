@@ -48,6 +48,9 @@ class App(customtkinter.CTk):
         self.Button_GW_targeted = customtkinter.CTkButton(self.tabview.tab("GW Alert"), command=self.input_gw_event_GW_targeted, text="Run targeted-approach")
         self.Button_GW_targeted.grid(row=1, column=0, padx=20, pady=(10, 10))
 
+        self.Button_GW170817_STMOC = customtkinter.CTkButton(self.tabview.tab("GW Alert"), command=self.input_gw_event_GW170817_STMOC, text="Run STMOC-approach (for GW170817)")
+        self.Button_GW170817_STMOC.grid(row=2, column=0, padx=20, pady=(10, 10))
+
 
 
         self.Button_IC170922A_HE = customtkinter.CTkButton(self.tabview.tab("Neutrino Alert"), text="Run for IC170922A_HE",command=self.input_neutrino_event_IC170922A_HE)
@@ -107,6 +110,18 @@ class App(customtkinter.CTk):
             if answer:
                 subprocess.check_call('chmod u+r+x initalize_Reference_GW_targeted.sh', shell=True)
                 subprocess.check_call('./initalize_Reference_GW_targeted.sh', shell=True)
+                showinfo(
+                    title='Progressing',
+                    message='ToOpy is processing the alert please check command line and output folders')
+
+    def input_gw_event_GW170817_STMOC(self):
+            answer = askokcancel(
+                title='Confirmation',
+                message='Crossmatching alert with galaxy catalog and checking observability from Roque de los Muchachos.',
+                icon=WARNING)
+            if answer:
+                subprocess.check_call('chmod u+r+x initalize_Reference_GW170817_STMOC.sh', shell=True)
+                subprocess.check_call('./initalize_Reference_GW170817_STMOC.sh', shell=True)
                 showinfo(
                     title='Progressing',
                     message='ToOpy is processing the alert please check command line and output folders')

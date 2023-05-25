@@ -23,6 +23,7 @@ from library import stmoc_Swift
 
 from library import xmatch_GW
 from library import tiled_GW
+from library import stmoc_GW
 
 
 
@@ -224,6 +225,7 @@ if args.flavour == 'GBM':
         xmatch_GBM.merged_def.Xmatched_top10_BMag_to_obslist_glade2(args.url, args.observatory, crossmatched_glade2_cat, args.zenith, args.moon_separation, hdul1, args.too_span, args.time_res, outdir)
         print('Visibility done and '+'Total Run-time is: '+str(time.time() - start_visibility))
         print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
+
     if args.ranking_method == 'STMOC':
         outdir = './GBM_Alert/Xmatch'
         if not os.path.exists(outdir):
@@ -273,6 +275,26 @@ if args.flavour == 'GW':
         print('Fully done and '+'Total Run-time is: '+str(time.time() - start_argparse))
         print('######################################################################################')
         print('######################################################################################')
+
+
+
+    if args.ranking_method == 'STMOC':
+        outdir = './GW_Alert/Xmatch'
+        if not os.path.exists(outdir):
+            os.makedirs(outdir, exist_ok=True)
+        crossmatched_glade2_cat, hdul1, outdir=stmoc_GW.merged_def.do_Xmatch(args.url, args.GraceID, args.Rev, args.vol, args.ranking_method, args.too_span, args.time_res, args.zenith, args.catalog)
+        outdir = stmoc_GW.merged_def.Xmatched_raw_to_3Dplot(crossmatched_glade2_cat, hdul1, outdir)
+        print('Done with xmatchGLade2 '+'Total Run-time is: '+str(time.time() - start_argparse))
+        
+        print('Done and '+'Total Run-time is: '+str(time.time() - start_argparse))
+        os.chdir(str(base_dir))
+        argument_list=['test_arg']
+        separator = " "
+        subprocess.check_call('chmod u+r+x run_STMOC_Interceptor_GW170817.sh', shell=True)
+        subprocess.check_call("./run_STMOC_Interceptor_GW170817.sh %s" % separator.join(argument_list), shell=True) 
+
+
+
     if args.ranking_method == 'tiled_GW':
         outdir = './GW_Alert/tiled_GW'
         if not os.path.exists(outdir):
