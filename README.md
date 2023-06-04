@@ -99,7 +99,7 @@ time_resolution='1' # time in hours per observing slot
 #############################################
 #############################################
 instrument_FOV='15.5'
-ranking='tiled_GW' # tiled_GW or Xmatch
+ranking='tiled_GW' # # tiled_GW, Xmatch or STMOC
 mode='diagnostic' # diagnostic or performance
 
 # Preferences for IceCube Alerts
@@ -120,8 +120,6 @@ lightcurve='no'
 ## Listeing to alerts
 $ `python toopy_gcn_listener_main.py`
 
-Notice the constant stream of hourly GW alerts @ x:15 (Revision 0) & x:20 (Revision 1) ;D
-Plus, every now and then some FermiGBM alerts ('FERMI_GBM_FIN_POS' & 'FERMI_GBM_SUBTHRESH')
 
 
 
